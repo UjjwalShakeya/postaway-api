@@ -1,0 +1,24 @@
+{
+  "name": "postaway-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UjjwalShakeya/postaway-api.git"
+  },
+  "author": "Ujjwal Shakeya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UjjwalShakeya/postaway-api/issues"
+  },
+  "homepage": "https://github.com/UjjwalShakeya/postaway-api#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
