@@ -27,8 +27,8 @@ export default class UserController {
         return res.status(200).send(token);
 
       }
-    } catch (error) {
-       res.status(500).send(error);
+    } catch (err) {
+      return res.status(500).json({err:err.message});
     }
   }
 }
