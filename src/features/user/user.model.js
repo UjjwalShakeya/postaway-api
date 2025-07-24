@@ -1,3 +1,7 @@
+let Users = [
+    { id: 1, name: 'Ujjwal Shakeya', email: 'ujjwalshakeya1@gmail.com', password: 'abc123' }
+]
+
 export default class UserModel {
   constructor(id, name, email, password) {
     this.id = id;
@@ -29,6 +33,3 @@ export default class UserModel {
   }
 }
 
-let Users = [
-    { id: 1, name: 'Ujjwal Shakeya', email: 'ujjwalshakeya1@gmail.com', password: 'abc123' }
-]

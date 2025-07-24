@@ -2,6 +2,7 @@
 import express from "express";
 // importing the jwt token
 import jwtAuth from "../../middlewares/jwt.middleware.js";
+import upload from "../../middlewares/fileUpload.middleware.js"
 
 //  importing post controller
 import PostController from "./post.controller.js";
@@ -16,7 +17,7 @@ PostRouter.get("/:id", PostControllerInc.getPostById); // Retrieve a specific po
 
 PostRouter.get("/", jwtAuth, PostControllerInc.getPostsByUser); // Retrieve post on the user credentials
 
-PostRouter.post("/", jwtAuth, PostControllerInc.createPost); // create a new post
+PostRouter.post("/", jwtAuth,upload.single('imageUrl'), PostControllerInc.createPost); // create a new post
 
 PostRouter.delete("/:id",jwtAuth, PostControllerInc.deletePost); // delete a specific post by id 
 

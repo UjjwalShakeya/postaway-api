@@ -48,11 +48,12 @@ export default class PostController {
   async createPost(req, res) {
     try {
       const userID = req.userID;
-      const { caption, imageUrl } = req.body;
-      PostModel.add(userID, caption, imageUrl);
+      const { caption } = req.body;
+      const imageUrl = req.file.filename;
+      const newPost = PostModel.add(userID, caption, imageUrl);
       res
         .status(201)
-        .json({ success: true, message: "new post has been created" });
+        .json({ success: true, message: "new post has been created", NewPost: newPost });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }

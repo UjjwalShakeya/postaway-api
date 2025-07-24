@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing form data
 
 // User Router On Default 
 app.use("/api", userRouter);
+
 // post Router On post 
 app.use("/api/posts", PostRouter);
 

@@ -42,11 +42,10 @@ export default class PostModel {
     };
     const Post = new PostModel(posts.length + 1, userID, caption, image);
     const newPost = posts.push(Post);
-    console.log(posts);
     if (newPost <= 0) {
       throw new Error("could not create post");
     }
-    return newPost;
+    return Post;
   }
 
   // find posts of logged-in users
