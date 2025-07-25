@@ -32,13 +32,11 @@ export default class PostController {
     try {
       const userID = req.userID;
       const postsByUserId = PostModel.findByUserId(userID);
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Posts by userID",
-          posts: postsByUserId,
-        });
+      res.status(200).json({
+        success: true,
+        message: "Posts by userID",
+        posts: postsByUserId,
+      });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }
@@ -53,7 +51,11 @@ export default class PostController {
       const newPost = PostModel.add(userID, caption, imageUrl);
       res
         .status(201)
-        .json({ success: true, message: "new post has been created", NewPost: newPost });
+        .json({
+          success: true,
+          message: "new post has been created",
+          NewPost: newPost,
+        });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }
@@ -77,10 +79,10 @@ export default class PostController {
     try {
       const postID = req.params.id;
       const newData = req.body;
-      PostModel.update(postID,newData);
+      PostModel.update(postID, newData);
       res
         .status(201)
-        .json({ success: true, message: `${postID} post has been updated`});
+        .json({ success: true, message: `${postID} post has been updated` });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }

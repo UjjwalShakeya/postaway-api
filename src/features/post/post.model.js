@@ -1,4 +1,4 @@
-let posts = [
+export let posts = [
   {
     id: 1,
     userId: 1,
