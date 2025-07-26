@@ -10,6 +10,12 @@ export let posts = [
     userId: 2,
     caption: "Second post",
     imageUrl: "https://example.com/image2.jpg",
+  },
+  {
+    id: 3,
+    userId: 3,
+    caption: "Third post",
+    imageUrl: "https://example.com/image2.jpg",
   }
 ];
 

@@ -17,12 +17,28 @@ export default class CommentModel {
     const isPostFoud = posts.find((p) => p.id == id);
     if (isPostFoud) {
       const allCommentsByPost = comments.filter((c) => c.postId == id);
-      if (!allCommentsByPost) {
+      if (!allCommentsByPost || allCommentsByPost.length === 0) {
         throw new Error("could not get this post comments");
       }
       return allCommentsByPost;
-    }else{
+    } else {
       throw new Error("post does not exist");
-    };
+    }
+  }
+
+  static add(userId, postId, content) {
+    const newComment = new CommentModel(
+      comments.length + 1,
+      userId,
+      postId,
+      content
+    );
+    const isCommentAdded = comments.push(newComment);
+    if (isCommentAdded > 0) {
+      return newComment;
+    } else {
+      throw new Error("No Comment is added");
+    }
+    
   }
 }

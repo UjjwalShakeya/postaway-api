@@ -17,9 +17,25 @@ export default class CommentController {
     }
   };
   
-  // createComment(req,res,next){
+  createComment(req,res,next){
+    try {
+      const postId = req.params.id;
+      const userId = req.userID;
+      const {content} = req.body;
+      const newComment = CommentModel.add(userId,postId,content);
+      res
+        .status(200)
+        .json({
+          success: true,
+          message: "New Comment has been added for Post",
+          Comment: newComment,
+        });
 
-  // }
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  }
+
   // deleteComment(req,res,next){
 
   // }
