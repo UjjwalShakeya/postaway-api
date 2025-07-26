@@ -15,7 +15,7 @@ commentRouter.get("/:id",jwtAuth, CommentControllerInc.getAll);
 commentRouter.post("/:id",jwtAuth, CommentControllerInc.createComment);
 
 // // remove specific comment by id
-// commentRouter.delete("/:id",jwtAuth, CommentControllerInc.deleteComment);
+commentRouter.delete("/:id",jwtAuth, CommentControllerInc.deleteComment);
 
 // // update specific comment by id
 // commentRouter.put("/:id",jwtAuth, CommentControllerInc.updateComment);

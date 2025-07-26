@@ -22,7 +22,7 @@ export default class CommentModel {
       }
       return allCommentsByPost;
     } else {
-      throw new Error("post does not exist");
+      throw new Error("comments dont not exist");
     }
   }
 
@@ -40,5 +40,18 @@ export default class CommentModel {
       throw new Error("No Comment is added");
     }
     
+  }
+  static remove(id,userId) {
+    const commentIndex = comments.findIndex(c => c.id == id && c.userId == userId);
+    if (commentIndex == -1){
+      throw new Error("comment not found");
+    };
+    console.log(comments);
+    const isDeleted = comments.splice(commentIndex,1);
+    if (!isDeleted){
+      throw new Error("Could not delete this comment");
+    };
+    console.log(comments);
+    return isDeleted
   }
 }
