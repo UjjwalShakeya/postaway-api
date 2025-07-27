@@ -1,0 +1,43 @@
+let likes = [
+    { id: 1, userId: 1, postId: 1 },
+    { id: 2, userId: 2, postId: 1 },
+    { id: 3, userId: 3, postId: 2 },
+    { id: 4, userId: 5, postId: 2 },
+    { id: 5, userId: 70, postId: 2 }
+];
+
+export default class LikeModel{
+    constructor(id,userId,postId) {
+        this.id = id;
+        this.userId = userId;
+        this.postId = postId;
+    };
+
+    // get all likes
+    static getAll(postId){
+        const allLikes = likes.filter(l => l.postId == postId);
+        if (!allLikes || allLikes.length <= 0){
+            throw new Error("could not get likes of this post");            
+        }
+        return allLikes;
+    };
+
+    // like specific post post 
+    static add(userId,postId){
+        const newLike = new LikeModel(likes.length + 1 ,userId,postId);
+        const isLikeAdded = likes.push(newLike);
+        if (!isLikeAdded){
+            throw new Error("could not like this post");            
+        }
+        return newLike;
+    };
+    // like specific post post 
+    static delete(userId,postId){
+        const likeIndex = likes.findIndex(l => l.userId == userId && l.postId == postId);
+        if (likeIndex == -1){
+            throw new Error("like is not found");            
+        }
+        likes.splice(likeIndex,1);
+        return likeIndex;
+    };
+}

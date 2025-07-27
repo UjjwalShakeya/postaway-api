@@ -1,5 +1,5 @@
+// importing required modules
 import CommentModel from "../comment/comment.model.js";
-import PostModel from "../post/post.model.js";
 
 export default class CommentController {
   async getAll(req, res) {
@@ -16,7 +16,7 @@ export default class CommentController {
     }
   }
 
-  createComment(req, res, next) {
+  async createComment(req, res, next) {
     try {
       const postId = req.params.id;
       const userId = req.userID;
@@ -32,7 +32,7 @@ export default class CommentController {
     }
   }
 
-  deleteComment(req, res, next) {
+  async deleteComment(req, res, next) {
     try {
       const commentId = req.params.id;
       const userID = req.userID;
@@ -45,7 +45,7 @@ export default class CommentController {
       res.status(500).json({ success: false, error: err.message });
     }
   }
-  updateComment(req, res, next) {
+  async updateComment(req, res, next) {
     try {
       const commentId = req.params.id;
       const { content } = req.body;
