@@ -45,7 +45,19 @@ export default class CommentController {
       res.status(500).json({ success: false, error: err.message });
     }
   }
-  // updateComment(req,res,next){
-
-  // }
+  updateComment(req, res, next) {
+    try {
+      const commentId = req.params.id;
+      const { content } = req.body;
+      const userId = req.userID;
+      const updatedComment = CommentModel.update(commentId, content,userId);
+      res.status(200).json({
+        success: true,
+        message: `You comment with id ${commentId} has been deleted`, 
+        UpdatedComment: updatedComment,
+      });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  }
 }

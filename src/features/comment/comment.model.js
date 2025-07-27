@@ -39,19 +39,31 @@ export default class CommentModel {
     } else {
       throw new Error("No Comment is added");
     }
-    
   }
-  static remove(id,userId) {
-    const commentIndex = comments.findIndex(c => c.id == id && c.userId == userId);
-    if (commentIndex == -1){
+  static remove(id, userId) {
+    const commentIndex = comments.findIndex(
+      (c) => c.id == id && c.userId == userId
+    );
+    if (commentIndex == -1) {
       throw new Error("comment not found");
-    };
+    }
     console.log(comments);
-    const isDeleted = comments.splice(commentIndex,1);
-    if (!isDeleted){
+    const isDeleted = comments.splice(commentIndex, 1);
+    if (!isDeleted) {
       throw new Error("Could not delete this comment");
-    };
+    }
     console.log(comments);
-    return isDeleted
+    return isDeleted;
+  }
+  static update(id, content, userId) {
+    const commentIndex = comments.findIndex(
+      (c) => c.userId == userId && c.id == id
+    );
+
+    if (commentIndex == -1) {
+      throw new Error("could not find this comment");
+    }
+    comments[commentIndex].content = content;
+    return comments[commentIndex];
   }
 }

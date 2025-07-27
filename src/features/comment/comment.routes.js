@@ -18,6 +18,6 @@ commentRouter.post("/:id",jwtAuth, CommentControllerInc.createComment);
 commentRouter.delete("/:id",jwtAuth, CommentControllerInc.deleteComment);
 
 // // update specific comment by id
-// commentRouter.put("/:id",jwtAuth, CommentControllerInc.updateComment);
+commentRouter.put("/:id",jwtAuth, CommentControllerInc.updateComment);
 
 export default commentRouter;
