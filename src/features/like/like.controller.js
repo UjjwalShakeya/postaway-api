@@ -19,7 +19,7 @@ export default class LikeController {
   async addLike(req, res, next) {
     try {
       const userId = req.userID;
-      const postId = req.params.postid;
+      const postId = req.params.postId;
       const newLike = LikeModel.add(userId, postId);
       res.status(200).json({
         success: true,
@@ -34,7 +34,7 @@ export default class LikeController {
   async deleteLike(req, res, next) {
     try {
       const userId = req.userID;
-      const postId = req.params.postid;
+      const postId = req.params.postId;
       LikeModel.delete(userId, postId);
       res.status(200).json({
         success: true,

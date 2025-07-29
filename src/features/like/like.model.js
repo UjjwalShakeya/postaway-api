@@ -26,7 +26,7 @@ export default class LikeModel{
     static add(userId,postId){
         const newLike = new LikeModel(likes.length + 1 ,userId,postId);
         const isLikeAdded = likes.push(newLike);
-        if (!isLikeAdded){
+        if (!isLikeAdded  || isLikeAdded <=0){
             throw new Error("could not like this post");            
         }
         return newLike;
@@ -38,6 +38,7 @@ export default class LikeModel{
             throw new Error("like is not found");            
         }
         likes.splice(likeIndex,1);
+        console.log(likes);
         return likeIndex;
     };
 }
