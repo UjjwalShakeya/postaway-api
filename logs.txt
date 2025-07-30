@@ -1,2 +1,1 @@
-{"level":"info","message":"/api/comments/1 - undefined","service":"request-logging"}
-{"level":"info","message":"/api/comments/1 - undefined","service":"request-logging"}
+[2025-07-30T16:47:40.223Z] info: GET /api/comments/1 undefined
