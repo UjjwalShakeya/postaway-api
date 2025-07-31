@@ -3,17 +3,17 @@ import UserModel from "./user.model.js";
 import jwt from "jsonwebtoken";
 
 export default class UserController {
-  SignUp(req, res) {
+  SignUp(req, res,next) {
     try {
       const { name, email, password } = req.body;
       const user = UserModel.signUp(name, email, password);
       res.status(201).json({ message: "User created", user });
     } catch (err) {
-      res.status(500).json({err:err.message});
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
 
-  SignIn(req, res) {
+  SignIn(req, res,next) {
     try {
       const { email, password } = req.body;
       const result = UserModel.signIn(email, password);
@@ -28,7 +28,7 @@ export default class UserController {
 
       }
     } catch (err) {
-      return res.status(500).json({err:err.message});
+       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
 }

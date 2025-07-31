@@ -1,3 +1,6 @@
+// importing required module
+import ApplicationError from "../../../utils/ApplicationError.js";
+
 let likes = [
     { id: 1, userId: 1, postId: 1 },
     { id: 2, userId: 2, postId: 1 },
@@ -17,7 +20,7 @@ export default class LikeModel{
     static getAll(postId){
         const allLikes = likes.filter(l => l.postId == postId);
         if (!allLikes || allLikes.length <= 0){
-            throw new Error("could not get likes of this post");            
+            throw new ApplicationError("could not get likes of this post",  404)          
         }
         return allLikes;
     };
@@ -27,7 +30,7 @@ export default class LikeModel{
         const newLike = new LikeModel(likes.length + 1 ,userId,postId);
         const isLikeAdded = likes.push(newLike);
         if (!isLikeAdded  || isLikeAdded <=0){
-            throw new Error("could not like this post");            
+            throw new ApplicationError("could not like this post",  404)            
         }
         return newLike;
     };
@@ -35,7 +38,7 @@ export default class LikeModel{
     static delete(userId,postId){
         const likeIndex = likes.findIndex(l => l.userId == userId && l.postId == postId);
         if (likeIndex == -1){
-            throw new Error("like is not found");            
+            throw new ApplicationError("like is not found",  404)          
         }
         likes.splice(likeIndex,1);
         console.log(likes);

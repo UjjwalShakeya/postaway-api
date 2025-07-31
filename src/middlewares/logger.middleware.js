@@ -26,17 +26,17 @@ const loggerMiddleware = async (req, res, next) => {
   const shouldLog = !excludedRoutes.some((route) => req.url.includes(route));
 
   if (shouldLog) {
-    const logMessage = `${req.method} ${req.originalUrl} ${JSON.stringify(req.body)}`;
+    const logMessage = `${req.method} ${req.originalUrl} ${req.body ? JSON.stringify(req.body): "Request Body Is Empty"}`;
     logger.info(logMessage);
   }
   next();
 };
 
-const errorLoggerMiddleware = async (err, req,res) => {
+const errorLoggerMiddleware = async (err, req,res,next) => {
   logger.error({
     message: err.message,
     url: req.url,
-    method: req.method
+    method: req.method  
   });
   next(err);
 };

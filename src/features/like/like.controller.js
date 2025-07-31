@@ -12,9 +12,9 @@ export default class LikeController {
         AllLikes: allLikes,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
-  }
+  };
 
   async addLike(req, res, next) {
     try {
@@ -27,7 +27,7 @@ export default class LikeController {
         NewLike: newLike,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   };
 
@@ -41,7 +41,7 @@ export default class LikeController {
         message: `like of user ${userId} is removed `,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
 }

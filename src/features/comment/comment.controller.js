@@ -2,7 +2,7 @@
 import CommentModel from "../comment/comment.model.js";
 
 export default class CommentController {
-  async getAll(req, res) {
+  async getAll(req, res,next) {
     try {
       const postId = req.params.id;
       const allComments = CommentModel.findCommentByPost(postId);
@@ -12,7 +12,7 @@ export default class CommentController {
         comments: allComments,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
 
@@ -28,7 +28,7 @@ export default class CommentController {
         Comment: newComment,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
 
@@ -42,7 +42,7 @@ export default class CommentController {
         message: `Comment ${commentId} has been deleted`,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
   async updateComment(req, res, next) {
@@ -57,7 +57,7 @@ export default class CommentController {
         UpdatedComment: updatedComment,
       });
     } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
     }
   }
 }

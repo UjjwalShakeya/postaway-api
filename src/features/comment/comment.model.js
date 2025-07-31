@@ -1,4 +1,5 @@
 import { posts } from "../post/post.model.js";
+import ApplicationError from "../../../utils/ApplicationError.js";
 
 let comments = [
   { id: 1, userId: 1, postId: 1, content: "First comment on post 1" },

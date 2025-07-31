@@ -1,3 +1,6 @@
+// importing importand modules 
+import ApplicationError from "../../../utils/ApplicationError.js";
+
 export let posts = [
   {
     id: 1,
@@ -36,7 +39,7 @@ export default class PostModel {
   static findById(id) {
     const post = posts.find((p) => p.id === Number(id));
     if (!post) {
-      throw new Error("Post Not Found");
+      throw new ApplicationError("Post Not Found",  404)
     }
     return post;
   }
@@ -44,12 +47,12 @@ export default class PostModel {
   // create a new post
   static add(userID, caption, image) {
     if (!userID || !caption || !image){
-      throw new Error("could not create post");
+      throw new ApplicationError("could not create post",  404)
     };
     const Post = new PostModel(posts.length + 1, userID, caption, image);
     const newPost = posts.push(Post);
     if (newPost <= 0) {
-      throw new Error("could not create post");
+       throw new ApplicationError("could not create post",  404)
     }
     return Post;
   }
@@ -58,7 +61,7 @@ export default class PostModel {
   static findByUserId(userID) {
     const postsFound = posts.filter((p) => p.userId == userID);
     if (postsFound <= 0) {
-      throw new Error("could not get posts");
+       throw new ApplicationError("could not get posts",  404)
     }
     return postsFound;
   }
@@ -66,7 +69,7 @@ export default class PostModel {
   static delete(postID) {
     const ispostFound = posts.findIndex((p) => p.id == postID);
      if (ispostFound == -1) {
-      throw new Error("could not find post");
+      throw new ApplicationError("could not find post",  404)
     }
     posts.splice(ispostFound,1);
     console.log(posts);
@@ -77,7 +80,7 @@ export default class PostModel {
   static update(id,data) {
     const postIndex = posts.findIndex(p => p.id == id);
     if (postIndex == -1){
-        throw new Error("Post Not Found");
+      throw new ApplicationError("Post Not Found",  404)
     }
     posts[postIndex] = {
       ...posts[postIndex],
