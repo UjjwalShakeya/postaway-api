@@ -5,10 +5,24 @@ export default class PostController {
   // retrieve all posts
   async getAllPosts(req, res,next) {
     try {
-      const allPosts = PostModel.findAll();
+      const caption = req.query.caption;
+      const allPosts = PostModel.findAll(caption.toLowerCase());
       res
         .status(200)
         .json({ success: true, message: "All posts", data: allPosts });
+    } catch (err) {
+      next(err);// calling next with error, error will be caught by errorhandler Middleware
+    }
+  }
+
+  // retrieve filtered posts
+  async getFilteredPosts(req, res,next) {
+    try {
+      const caption = req.query.caption;
+      const filteredPosts = PostModel.filter(caption.toLowerCase());
+      res
+        .status(200)
+        .json({ success: true, message: "Filtered Posts", filteredPosts: filteredPosts });
     } catch (err) {
       next(err);// calling next with error, error will be caught by errorhandler Middleware
     }

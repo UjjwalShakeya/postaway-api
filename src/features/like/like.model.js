@@ -29,19 +29,18 @@ export default class LikeModel{
     static add(userId,postId){
         const newLike = new LikeModel(likes.length + 1 ,userId,postId);
         const isLikeAdded = likes.push(newLike);
-        if (!isLikeAdded  || isLikeAdded <=0){
-            throw new ApplicationError("could not like this post",  404)            
+        if (!isLikeAdded  || isLikeAdded <= 0){
+            throw new ApplicationError("post not found",  404)            
         }
         return newLike;
     };
-    // like specific post post 
+ 
     static delete(userId,postId){
         const likeIndex = likes.findIndex(l => l.userId == userId && l.postId == postId);
         if (likeIndex == -1){
             throw new ApplicationError("like is not found",  404)          
         }
         likes.splice(likeIndex,1);
-        console.log(likes);
         return likeIndex;
     };
 }

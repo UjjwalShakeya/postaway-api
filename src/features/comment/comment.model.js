@@ -19,7 +19,7 @@ export default class CommentModel {
     if (isPostFoud) {
       const allCommentsByPost = comments.filter((c) => c.postId == id);
       if (!allCommentsByPost || allCommentsByPost.length === 0) {
-        throw new Error("could not get this post comments");
+        throw new ApplicationError("could not get this post comments",404)
       }
       return allCommentsByPost;
     } else {
@@ -38,7 +38,8 @@ export default class CommentModel {
     if (isCommentAdded > 0) {
       return newComment;
     } else {
-      throw new Error("No Comment is added");
+        throw new ApplicationError("something went wrong adding comment",400)
+
     }
   }
   static remove(id, userId) {
@@ -46,14 +47,13 @@ export default class CommentModel {
       (c) => c.id == id && c.userId == userId
     );
     if (commentIndex == -1) {
-      throw new Error("comment not found");
+        throw new ApplicationError("comment not found",404)
+
     }
-    console.log(comments);
     const isDeleted = comments.splice(commentIndex, 1);
     if (!isDeleted) {
-      throw new Error("Could not delete this comment");
+        throw new ApplicationError("something went wrong deleting post",404)
     }
-    console.log(comments);
     return isDeleted;
   }
   static update(id, content, userId) {
@@ -62,7 +62,7 @@ export default class CommentModel {
     );
 
     if (commentIndex == -1) {
-      throw new Error("could not find this comment");
+        throw new ApplicationError("could not find this comment",404)
     }
     comments[commentIndex].content = content;
     return comments[commentIndex];

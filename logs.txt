@@ -2,3 +2,24 @@
 [2025-07-31T17:41:16.480Z] error: [object Object]
 [2025-07-31T17:41:26.078Z] error: [object Object]
 [2025-07-31T17:42:07.726Z] error: [object Object]
+[2025-08-01T17:31:22.853Z] info: GET /api/posts/all Request Body Is Empty
+[2025-08-01T17:31:57.555Z] info: GET /api/posts/all?caption=third%20post Request Body Is Empty
+[2025-08-01T17:38:03.477Z] info: GET /api/posts/all?caption=third%20post Request Body Is Empty
+[2025-08-01T17:38:20.601Z] info: GET /api/posts/all?caption=Third%20post Request Body Is Empty
+[2025-08-01T17:38:30.100Z] info: GET /api/posts/all?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:23:32.157Z] info: GET /api/posts/filter?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:24:26.881Z] info: GET /api/posts/filter?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:24:43.300Z] info: GET /api/posts/filter?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:25:40.177Z] info: GET /api/posts/filter?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:25:59.619Z] info: GET /api/posts/filter?caption=THIRD%20POST Request Body Is Empty
+[2025-08-01T18:39:26.231Z] info: GET /api/posts/filter?caption=Post Request Body Is Empty
+[2025-08-01T18:39:33.740Z] info: GET /api/posts/filter?caption=POST Request Body Is Empty
+[2025-08-01T18:39:45.964Z] info: GET /api/posts/filter?caption=Third Request Body Is Empty
+[2025-08-01T18:39:56.385Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty
+[2025-08-01T18:40:31.555Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty
+[2025-08-01T18:40:37.612Z] info: GET /api/posts/filter?caption=third Request Body Is Empty
+[2025-08-01T18:40:42.063Z] info: GET /api/posts/filter?caption=porst Request Body Is Empty
+[2025-08-01T18:49:50.583Z] info: GET /api/posts/filter?caption=post Request Body Is Empty
+[2025-08-01T18:49:56.842Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty
+[2025-08-01T18:50:29.220Z] info: GET /api/posts/filter?caption=plong Request Body Is Empty
+[2025-08-01T18:50:36.409Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty

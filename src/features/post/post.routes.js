@@ -13,6 +13,8 @@ const PostRouter = express.Router();
 
 PostRouter.get("/all", PostControllerInc.getAllPosts); // Retrieve all posts
 
+PostRouter.get("/filter", PostControllerInc.getFilteredPosts); // Get posts on the basis of filter
+
 PostRouter.get("/:id", PostControllerInc.getPostById); // Retrieve a specific post by id
 
 PostRouter.get("/", jwtAuth, PostControllerInc.getPostsByUser); // Retrieve post on the user credentials
