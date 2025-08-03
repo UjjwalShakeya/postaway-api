@@ -23,3 +23,35 @@
 [2025-08-01T18:49:56.842Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty
 [2025-08-01T18:50:29.220Z] info: GET /api/posts/filter?caption=plong Request Body Is Empty
 [2025-08-01T18:50:36.409Z] info: GET /api/posts/filter?caption=post%20third Request Body Is Empty
+[2025-08-03T08:01:44.015Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T08:47:11.508Z] info: GET /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:47:17.943Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:47:32.525Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:49:25.841Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:50:02.216Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:51:03.176Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:51:22.008Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:52:02.137Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T08:52:40.406Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T09:24:40.689Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:24:52.871Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:25:28.015Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:25:48.634Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:28:10.930Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:32:10.159Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:32:22.206Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:48:49.779Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:49:05.307Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T09:49:19.170Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-03T10:36:07.051Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T10:37:12.218Z] info: PATCH /api/posts/2/status {"status":"Archived"}
+[2025-08-03T10:37:45.138Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-03T10:38:07.450Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-03T10:39:01.316Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-03T10:39:08.212Z] info: PATCH /api/posts/2/status {"status":"draft"}
+[2025-08-03T10:40:31.705Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-03T10:40:49.355Z] info: PATCH /api/posts/2/status {"status":"draft"}
+[2025-08-03T10:41:32.432Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-03T10:41:46.123Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-03T10:41:52.974Z] info: PATCH /api/posts/2/status {"status":"ad"}
+[2025-08-03T10:42:03.337Z] info: PATCH /api/posts/2/status {"status":"published"}

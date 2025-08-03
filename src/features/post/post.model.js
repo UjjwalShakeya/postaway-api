@@ -7,39 +7,45 @@ export let posts = [
     userId: 1,
     caption: "First post",
     imageUrl: "https://example.com/image1.jpg",
+    status: "published",
   },
   {
     id: 2,
     userId: 2,
     caption: "Second post",
     imageUrl: "https://example.com/image2.jpg",
+    status: "draft",
   },
   {
     id: 3,
     userId: 3,
     caption: "Third post",
     imageUrl: "https://example.com/image2.jpg",
+    status: "published",
   },
   {
     id: 4,
     userId: 6,
     caption: " post",
     imageUrl: "https://example.com/image2.jpg",
+    status: "published",
   },
   {
     id: 5,
     userId: 4,
     caption: "Third post",
     imageUrl: "https://example.com/image2.jpg",
+    status: "draft",
   },
 ];
 
 export default class PostModel {
-  constructor(id, userId, caption, imageUrl) {
+  constructor(id, userId, caption, imageUrl, status) {
     this.id = id;
     this.userId = userId;
     this.caption = caption;
     this.imageUrl = imageUrl;
+    this.status = status;
   }
 
   // Get all posts
@@ -49,7 +55,7 @@ export default class PostModel {
     }
     return posts;
   }
-  
+
   // filtering the posts
   static filter(caption) {
     let filterPosts = posts;
@@ -64,7 +70,7 @@ export default class PostModel {
       throw new ApplicationError("Posts Not Found", 404);
     }
     return filterPosts;
-  };
+  }
 
   // Get post by ID
   static findById(id) {
@@ -76,7 +82,7 @@ export default class PostModel {
   }
 
   // create a new post
-  static add(userID, caption, image) {
+  static add(userID, caption, image, status) {
     const missingFields = [];
     if (!userID) missingFields.push("userID");
     if (!caption) missingFields.push("caption");
@@ -91,8 +97,9 @@ export default class PostModel {
     const Post = new PostModel(
       posts.length + 1,
       userID,
-      caption.toLowerCase(),
-      image
+      caption,
+      image,
+      status
     );
     const newPost = posts.push(Post);
     if (newPost <= 0) {
@@ -130,5 +137,32 @@ export default class PostModel {
       ...posts[postIndex],
       ...data,
     };
+  }
+
+  static updateStatus(userId, postId, newStatus) {
+    const postIndex = posts.findIndex(
+      (p) => p.id == postId && p.userId == userId
+    );
+    if (postIndex === -1) {
+      throw new ApplicationError("Post Not Found", 404);
+    }
+
+    const currentStatus = posts[postIndex].status;
+    const allowedTransitions = {
+      draft: ["published"],
+      published: ["archived"],
+      archived: ["published"],
+    };
+
+    // Check if newStatus is allowed for currentStatus
+    if (!allowedTransitions[currentStatus]?.includes(newStatus)) {
+      throw new ApplicationError(
+        `Invalid status transition from '${currentStatus}' to '${newStatus}'`,
+        400
+      );
+    }
+
+    posts[postIndex].status = newStatus;
+    return posts[postIndex];
   }
 }
