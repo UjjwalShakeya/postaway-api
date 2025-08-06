@@ -1,5 +1,7 @@
 // importing importand modules
 import ApplicationError from "../../../utils/ApplicationError.js";
+import LikeModel from "../like/like.model.js";
+import CommentModel from "../comment/comment.model.js";
 
 export let posts = [
   {
@@ -8,6 +10,7 @@ export let posts = [
     caption: "First post",
     imageUrl: "https://example.com/image1.jpg",
     status: "published",
+    createdAt: new Date("2024-08-01T10:00:00Z")
   },
   {
     id: 2,
@@ -15,6 +18,7 @@ export let posts = [
     caption: "Second post",
     imageUrl: "https://example.com/image2.jpg",
     status: "draft",
+    createdAt: new Date("2024-07-28T09:15:00Z")
   },
   {
     id: 3,
@@ -22,6 +26,7 @@ export let posts = [
     caption: "Third post",
     imageUrl: "https://example.com/image2.jpg",
     status: "published",
+    createdAt: new Date("2024-07-30T14:45:00Z")
   },
   {
     id: 4,
@@ -29,6 +34,7 @@ export let posts = [
     caption: " post",
     imageUrl: "https://example.com/image2.jpg",
     status: "published",
+    createdAt: new Date("2024-08-03T08:30:00Z")
   },
   {
     id: 5,
@@ -36,8 +42,10 @@ export let posts = [
     caption: "Third post",
     imageUrl: "https://example.com/image2.jpg",
     status: "draft",
+    createdAt: new Date("2024-07-25T12:00:00Z")
   },
 ];
+
 
 export default class PostModel {
   constructor(id, userId, caption, imageUrl, status) {
@@ -96,7 +104,7 @@ export default class PostModel {
     }
     const Post = new PostModel(
       posts.length + 1,
-      userID,
+      parseInt(userID),
       caption,
       image,
       status
@@ -160,9 +168,42 @@ export default class PostModel {
         `Invalid status transition from '${currentStatus}' to '${newStatus}'`,
         400
       );
-    }
+    };
 
     posts[postIndex].status = newStatus;
     return posts[postIndex];
+  };
+
+  static getPostsSorted(by = "engagement") {
+    if (!posts || posts.length === 0) {
+      throw new ApplicationError("No posts found", 404);
+    }
+
+    // Compute engagement for each post
+    const postsWithEngagement = posts.map((post) => {
+      const likes = LikeModel.countByPostId(post.id);
+      const comments = CommentModel.countByPostId(post.id);
+      const engagement = likes + comments; // calculating engangement
+
+      return {
+        ...post,
+        engagement,
+      };
+    });
+
+    if (by === "date") {
+      return postsWithEngagement.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt) // when two date objects are subtracted they are automatically converted to a number
+      );
+    }
+
+
+    // Default: sort by engagement, then date
+    return postsWithEngagement.sort((a, b) => {
+      if (b.engagement === a.engagement) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+      return b.engagement - a.engagement;
+    });
   }
 }

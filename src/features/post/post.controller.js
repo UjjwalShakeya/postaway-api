@@ -20,13 +20,11 @@ export default class PostController {
     try {
       const caption = req.query.caption;
       const filteredPosts = PostModel.filter(caption.toLowerCase());
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Filtered Posts",
-          filteredPosts: filteredPosts,
-        });
+      res.status(200).json({
+        success: true,
+        message: "Filtered Posts",
+        filteredPosts: filteredPosts,
+      });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
@@ -35,7 +33,7 @@ export default class PostController {
   // retrieve post by the id
   async getPostById(req, res, next) {
     try {
-      const id = req.params.id;
+      const id = parseInt(req.params.id);
       const post = PostModel.findById(id);
       res
         .status(200)
@@ -48,7 +46,7 @@ export default class PostController {
   // retrieve post by the user credentials
   async getPostsByUser(req, res, next) {
     try {
-      const userID = req.userID;
+      const userID = parseInt(req.userID);
       const postsByUserId = PostModel.findByUserId(userID);
       res.status(200).json({
         success: true,
@@ -63,7 +61,7 @@ export default class PostController {
   // created new post
   async createPost(req, res, next) {
     try {
-      const userID = req.userID;
+      const userID = parseInt(req.userID) ;
       const { caption, status } = req.body;
       const imageUrl = req.file.filename;
 
@@ -87,7 +85,7 @@ export default class PostController {
   // update the new post
   async deletePost(req, res, next) {
     try {
-      const postID = req.params.id;
+      const postID = parseInt(req.params.id);
       PostModel.delete(postID);
       res
         .status(200)
@@ -100,7 +98,7 @@ export default class PostController {
   // update the specific post
   async updatePost(req, res, next) {
     try {
-      const postID = req.params.id;
+      const postID = parseInt(req.params.id);
       const newData = req.body;
       PostModel.update(postID, newData);
       res
@@ -114,8 +112,8 @@ export default class PostController {
   // update the specific post status
   async postStatus(req, res, next) {
     try {
-      const postID = req.params.id;
-      const userID = req.userID;
+      const postID = parseInt(req.params.id);
+      const userID = parseInt(req.userID);
       const { status } = req.body;
       const isPostStatusUpdated = PostModel.updateStatus(
         userID,
@@ -125,6 +123,20 @@ export default class PostController {
       res
         .status(201)
         .json({ success: true, updatedStatus: isPostStatusUpdated });
+    } catch (err) {
+      next(err); // calling next with error, error will be caught by errorhandler Middleware
+    }
+  }
+  // Implement sorting of posts based on user engagement and date
+  async getSortedPosts(req, res, next) {
+    try {
+      const sortBy = req.query.sortBy || "engagement"; // or "date"
+      const sortedPosts = PostModel.getPostsSorted(sortBy);
+      res.status(200).json({
+        success: true,
+        message: `Sorted posts by ${sortBy}`,
+        data: sortedPosts,
+      });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }

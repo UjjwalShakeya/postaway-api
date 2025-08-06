@@ -4,7 +4,7 @@ import LikeModel from "./like.model.js";
 export default class LikeController {
   async getAllLikes(req, res, next) {
     try {
-      const postId = req.params.postid;
+      const postId = parseInt(req.params.postid);
       const allLikes = LikeModel.getAll(postId); 
        res.status(200).json({
         success: true,
@@ -18,8 +18,9 @@ export default class LikeController {
 
   async addLike(req, res, next) {
     try {
-      const userId = req.userID;
-      const postId = req.params.postId;
+      const userId = parseInt(req.userID);
+      const postId = parseInt(req.params.postId);
+      
       const newLike = LikeModel.add(userId, postId);
       res.status(200).json({
         success: true,
@@ -33,8 +34,8 @@ export default class LikeController {
 
   async deleteLike(req, res, next) {
     try {
-      const userId = req.userID;
-      const postId = req.params.postId;
+      const userId = parseInt(req.userID);
+      const postId = parseInt(req.params.postId);
       LikeModel.delete(userId, postId);
       res.status(200).json({
         success: true,

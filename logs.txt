@@ -55,3 +55,23 @@
 [2025-08-03T10:41:46.123Z] info: PATCH /api/posts/2/status {"status":"archived"}
 [2025-08-03T10:41:52.974Z] info: PATCH /api/posts/2/status {"status":"ad"}
 [2025-08-03T10:42:03.337Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-05T17:31:50.095Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-05T17:33:30.452Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-05T17:37:45.197Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-05T17:39:29.547Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T15:54:11.193Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T15:55:12.359Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T15:55:40.160Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T16:00:13.449Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T16:11:54.679Z] info: GET /api/posts/sorted?sortBy Request Body Is Empty
+[2025-08-06T16:23:19.749Z] info: GET /api/posts/sorted?sortBy Request Body Is Empty
+[2025-08-06T16:39:07.492Z] info: GET /api/posts/sorted?sortBy= Request Body Is Empty
+[2025-08-06T16:39:12.943Z] info: GET /api/posts/sorted?sortBy=date Request Body Is Empty
+[2025-08-06T16:39:27.091Z] info: GET /api/posts/sorted?sortBy Request Body Is Empty
+[2025-08-06T16:39:55.824Z] info: GET /api/posts/sorted?sortBy=date Request Body Is Empty
+[2025-08-06T16:44:08.348Z] info: GET /api/posts/sorted?sortBy=date Request Body Is Empty
+[2025-08-06T16:44:35.399Z] info: GET /api/posts/sorted?sortBy Request Body Is Empty
+[2025-08-06T16:45:28.212Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T16:47:18.973Z] info: GET /api/posts/sorted?sortBy=date Request Body Is Empty
+[2025-08-06T16:47:29.063Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
+[2025-08-06T16:47:35.287Z] info: GET /api/posts/sorted Request Body Is Empty

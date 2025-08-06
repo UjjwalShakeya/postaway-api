@@ -17,6 +17,9 @@ PostRouter.get("/filter", PostControllerInc.getFilteredPosts); // Get posts on t
 
 PostRouter.get("/", jwtAuth, PostControllerInc.getPostsByUser); // Retrieve post on the user credentials
 
+// route for sorted posts
+PostRouter.get("/sorted",jwtAuth, PostControllerInc.getSortedPosts); 
+
 PostRouter.post("/", jwtAuth,upload.single('imageUrl'), PostControllerInc.createPost); // create a new post
 
 PostRouter.get("/:id", PostControllerInc.getPostById); // Retrieve a specific post by id

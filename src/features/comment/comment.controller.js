@@ -4,7 +4,7 @@ import CommentModel from "../comment/comment.model.js";
 export default class CommentController {
   async getAll(req, res,next) {
     try {
-      const postId = req.params.id;
+      const postId = parseInt(req.params.id);
       const allComments = CommentModel.findCommentByPost(postId);
       res.status(200).json({
         success: true,
@@ -18,8 +18,8 @@ export default class CommentController {
 
   async createComment(req, res, next) {
     try {
-      const postId = req.params.id;
-      const userId = req.userID;
+      const postId = parseInt(req.params.id);
+      const userId = parseInt(req.userID);
       const { content } = req.body;
       const newComment = CommentModel.add(userId, postId, content);
       res.status(200).json({
@@ -34,8 +34,8 @@ export default class CommentController {
 
   async deleteComment(req, res, next) {
     try {
-      const commentId = req.params.id;
-      const userID = req.userID;
+      const commentId = parseInt(req.params.id);
+      const userID = parseInt(req.userID);
       CommentModel.remove(commentId, userID);
       res.status(200).json({
         success: true,
@@ -47,7 +47,7 @@ export default class CommentController {
   }
   async updateComment(req, res, next) {
     try {
-      const commentId = req.params.id;
+      const commentId = parseInt(req.params.id);
       const { content } = req.body;
       const userId = req.userID;
       const updatedComment = CommentModel.update(commentId, content,userId);
