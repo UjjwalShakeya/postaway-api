@@ -15,4 +15,20 @@ export default class bookmarkController {
             next(err);
         };
     };
-}
+
+    async createBookmark(req, res, next) {
+        const userId = parseInt(req.userID);
+        const postId = parseInt(req.params.postid);
+        
+        try {
+            bookmarkModel.add(userId,postId);
+            res.status(201).json({
+                success: true,
+                message: `your post with id ${postId} has been bookmarked`,
+            });
+        } catch (err) {
+            next(err);
+        };
+    };
+
+};

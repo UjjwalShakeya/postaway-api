@@ -12,6 +12,12 @@ const AllBookMarks = [
 ];
 
 export default class bookmarkModel {
+  constructor(id, postid, userid) {
+    this.id = id;
+    this.postid = postid;
+    this.userid = userid;
+  }
+
   static get(userId) {
     if (!AllBookMarks || AllBookMarks.length == 0) {
       throw new ApplicationError("there is no bookmarked posts", 404);
@@ -31,13 +37,29 @@ export default class bookmarkModel {
         (bookmark) => bookmark.postId === post.id && post.status != "draft"
       )
     );
-    
+
     if (bookmarkedPosts.length === 0) {
       throw new ApplicationError("No bookmarks found for this user", 404);
     }
     return bookmarkedPosts;
   }
 
-  static add() {}
+  static add(userId, postId) {
+    const newBookMark = new bookmarkModel(
+      AllBookMarks.length + 1,
+      userId,
+      postId
+    );
+
+    if (!newBookMark) {
+      throw new ApplicationError(
+        "something went wrong while adding to bookmark",
+        400
+      );
+    }
+
+    return newBookMark;
+  }
+
   static delete() {}
 }
