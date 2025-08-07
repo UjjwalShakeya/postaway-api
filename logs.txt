@@ -76,3 +76,13 @@
 [2025-08-06T16:47:29.063Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
 [2025-08-06T16:47:35.287Z] info: GET /api/posts/sorted Request Body Is Empty
 [2025-08-07T11:28:40.983Z] info: POST /api/posts {"name":"Amazon Kindle","price":4500,"desc":"E-book Reader","categories":"6838291e4e3650d3a4fca423,6838291e4e3650d3a4fca424"}
+[2025-08-07T16:34:40.311Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:36:06.293Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:36:32.844Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:41:15.034Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:41:28.443Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:41:47.698Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:41:56.112Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:42:03.919Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:42:22.645Z] info: GET /api/bookmarks/ Request Body Is Empty
+[2025-08-07T16:42:58.133Z] info: GET /api/bookmarks/ Request Body Is Empty
