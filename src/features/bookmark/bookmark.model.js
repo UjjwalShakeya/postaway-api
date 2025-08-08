@@ -19,7 +19,7 @@ export default class bookmarkModel {
   }
 
   static get(userId) {
-    if (!AllBookMarks || AllBookMarks.length == 0) {
+    if (!AllBookMarks || AllBookMarks.length === 0) {
       throw new ApplicationError("there is no bookmarked posts", 404);
     }
     // Get only bookmarks for this user
@@ -45,6 +45,16 @@ export default class bookmarkModel {
   }
 
   static add(userId, postId) {
+    const alreadyBookmarked = AllBookMarks.some(
+      (bookmark) => bookmark.userId === userId && bookmark.postId === postId
+    );
+
+    if (alreadyBookmarked) {
+      throw new ApplicationError("already bookmarked", 400);
+    }
+
+    PostModel.findById(postId);
+
     const newBookMark = new bookmarkModel(
       AllBookMarks.length + 1,
       userId,
@@ -57,6 +67,8 @@ export default class bookmarkModel {
         400
       );
     }
+
+    AllBookMarks.push(newBookMark);
 
     return newBookMark;
   }

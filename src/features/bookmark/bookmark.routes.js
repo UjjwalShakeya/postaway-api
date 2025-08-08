@@ -12,7 +12,8 @@ const bookmarkRouter = express.Router();
 bookmarkRouter.get('/',jwtAuth, bookmarkControllerInc.getBookmarkedPosts);
 
 // adding a new bookmark 
-bookmarkRouter.get('/:postid',jwtAuth, bookmarkControllerInc.createBookmark);
+bookmarkRouter.post('/:postid',jwtAuth, bookmarkControllerInc.createBookmark);
+
 
 
 export default bookmarkRouter;
