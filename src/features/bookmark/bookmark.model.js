@@ -52,8 +52,11 @@ export default class bookmarkModel {
     if (alreadyBookmarked) {
       throw new ApplicationError("already bookmarked", 400);
     }
-
-    PostModel.findById(postId);
+    
+    const post = PostModel.findById(postId);
+    if(post.status == "draft"){
+      throw new ApplicationError("Post is in draft", 400);
+    };
 
     const newBookMark = new bookmarkModel(
       AllBookMarks.length + 1,
@@ -66,12 +69,12 @@ export default class bookmarkModel {
         "something went wrong while adding to bookmark",
         400
       );
-    }
-
+    };
     AllBookMarks.push(newBookMark);
-
     return newBookMark;
   }
 
-  static delete() {}
+  static delete() {
+    
+  }
 }

@@ -14,6 +14,9 @@ bookmarkRouter.get('/',jwtAuth, bookmarkControllerInc.getBookmarkedPosts);
 // adding a new bookmark 
 bookmarkRouter.post('/:postid',jwtAuth, bookmarkControllerInc.createBookmark);
 
+// remove post from bookmark
+// bookmarkRouter.delete('/:postid',jwtAuth, bookmarkControllerInc.removeBookmark);
+
 
 
 export default bookmarkRouter;
