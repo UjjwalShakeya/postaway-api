@@ -15,7 +15,7 @@ bookmarkRouter.get('/',jwtAuth, bookmarkControllerInc.getBookmarkedPosts);
 bookmarkRouter.post('/:postid',jwtAuth, bookmarkControllerInc.createBookmark);
 
 // remove post from bookmark
-// bookmarkRouter.delete('/:postid',jwtAuth, bookmarkControllerInc.removeBookmark);
+bookmarkRouter.delete('/:postid',jwtAuth, bookmarkControllerInc.removeBookmark);
 
 
 

@@ -32,4 +32,19 @@ export default class bookmarkController {
         };
     };
 
+    async removeBookmark(req, res, next) {
+        const userId = parseInt(req.userID);
+        const postId = parseInt(req.params.postid);
+        try {
+            const result = bookmarkModel.delete(userId,postId);
+            res.status(200).json({
+                success: true,
+                message: `your post with id ${postId} has been removed from bookmark`,
+                removedPost: result
+            });
+        } catch (err) {
+            next(err);
+        };
+    };
+
 };

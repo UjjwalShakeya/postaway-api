@@ -3,12 +3,12 @@
 import ApplicationError from "../../../utils/ApplicationError.js";
 import PostModel from "../post/post.model.js";
 
-const AllBookMarks = [
+let AllBookMarks = [
   {
     id: 1,
     userId: 2,
     postId: 2,
-  },
+  }
 ];
 
 export default class bookmarkModel {
@@ -74,7 +74,16 @@ export default class bookmarkModel {
     return newBookMark;
   }
 
-  static delete() {
-    
+  static delete(userId, postId) {
+    const Index = AllBookMarks.findIndex(b => b.userId === userId && b.postId === postId);
+    if(Index === -1){
+      throw new ApplicationError(
+        "not found in bookmark list",
+        404
+      );
+    }
+    const removedPost = AllBookMarks[Index]
+    AllBookMarks.splice(Index,1);
+    return removedPost;
   }
 }
