@@ -5,15 +5,27 @@ export default class PostController {
   // retrieve all posts
   async getAllPosts(req, res, next) {
     try {
-      const caption = req.query.caption;
-      const allPosts = PostModel.findAll(caption.toLowerCase());
-      res
-        .status(200)
-        .json({ success: true, message: "All posts", data: allPosts });
+      const caption = req.query.caption || "";
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+
+      const result = PostModel.findAll(page, limit, caption);
+
+      res.status(200).json({
+        success: true,
+        message: "All posts",
+        data: result.posts,
+        pagination: {
+          totalPosts: result.totalPosts,
+          totalPages: result.totalPages,
+          currentPage: result.currentPage,
+        },
+      });
     } catch (err) {
-      next(err); // calling next with error, error will be caught by errorhandler Middleware
+      next(err); // error handled by middleware
     }
-  }
+  };
 
   // retrieve filtered posts
   async getFilteredPosts(req, res, next) {
@@ -61,7 +73,7 @@ export default class PostController {
   // created new post
   async createPost(req, res, next) {
     try {
-      const userID = parseInt(req.userID) ;
+      const userID = parseInt(req.userID);
       const { caption, status } = req.body;
       const imageUrl = req.file.filename;
 

@@ -10,7 +10,7 @@ export let posts = [
     caption: "First post",
     imageUrl: "https://example.com/image1.jpg",
     status: "published",
-    createdAt: new Date("2024-08-01T10:00:00Z")
+    createdAt: new Date("2024-08-01T10:00:00Z"),
   },
   {
     id: 2,
@@ -18,34 +18,153 @@ export let posts = [
     caption: "Second post",
     imageUrl: "https://example.com/image2.jpg",
     status: "published",
-    createdAt: new Date("2024-07-28T09:15:00Z")
+    createdAt: new Date("2024-07-28T09:15:00Z"),
   },
   {
     id: 3,
     userId: 3,
     caption: "Third post",
-    imageUrl: "https://example.com/image2.jpg",
+    imageUrl: "https://example.com/image3.jpg",
     status: "published",
-    createdAt: new Date("2024-07-30T14:45:00Z")
+    createdAt: new Date("2024-07-30T14:45:00Z"),
   },
   {
     id: 4,
     userId: 6,
-    caption: " post",
-    imageUrl: "https://example.com/image2.jpg",
+    caption: "Morning vibes",
+    imageUrl: "https://example.com/image4.jpg",
     status: "published",
-    createdAt: new Date("2024-08-03T08:30:00Z")
+    createdAt: new Date("2024-08-03T08:30:00Z"),
   },
   {
     id: 5,
     userId: 4,
-    caption: "Third post",
-    imageUrl: "https://example.com/image2.jpg",
+    caption: "Beach day",
+    imageUrl: "https://example.com/image5.jpg",
     status: "draft",
-    createdAt: new Date("2024-07-25T12:00:00Z")
+    createdAt: new Date("2024-07-25T12:00:00Z"),
+  },
+  {
+    id: 6,
+    userId: 5,
+    caption: "Coffee time",
+    imageUrl: "https://example.com/image6.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-05T07:20:00Z"),
+  },
+  {
+    id: 7,
+    userId: 2,
+    caption: "City lights",
+    imageUrl: "https://example.com/image7.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-06T19:45:00Z"),
+  },
+  {
+    id: 8,
+    userId: 7,
+    caption: "Nature walk",
+    imageUrl: "https://example.com/image8.jpg",
+    status: "draft",
+    createdAt: new Date("2024-07-29T16:10:00Z"),
+  },
+  {
+    id: 9,
+    userId: 1,
+    caption: "Workout session",
+    imageUrl: "https://example.com/image9.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-07T05:50:00Z"),
+  },
+  {
+    id: 10,
+    userId: 8,
+    caption: "Dinner with friends",
+    imageUrl: "https://example.com/image10.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-08T21:15:00Z"),
+  },
+  {
+    id: 11,
+    userId: 3,
+    caption: "Art gallery visit",
+    imageUrl: "https://example.com/image11.jpg",
+    status: "draft",
+    createdAt: new Date("2024-08-09T14:25:00Z"),
+  },
+  {
+    id: 12,
+    userId: 6,
+    caption: "Sunset capture",
+    imageUrl: "https://example.com/image12.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-10T18:40:00Z"),
+  },
+  {
+    id: 13,
+    userId: 9,
+    caption: "Book reading",
+    imageUrl: "https://example.com/image13.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-11T09:05:00Z"),
+  },
+  {
+    id: 14,
+    userId: 5,
+    caption: "Mountain hiking",
+    imageUrl: "https://example.com/image14.jpg",
+    status: "draft",
+    createdAt: new Date("2024-08-12T11:50:00Z"),
+  },
+  {
+    id: 15,
+    userId: 4,
+    caption: "Rainy day",
+    imageUrl: "https://example.com/image15.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-13T17:30:00Z"),
+  },
+  {
+    id: 16,
+    userId: 7,
+    caption: "Gaming night",
+    imageUrl: "https://example.com/image16.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-14T20:45:00Z"),
+  },
+  {
+    id: 17,
+    userId: 8,
+    caption: "Family picnic",
+    imageUrl: "https://example.com/image17.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-15T13:10:00Z"),
+  },
+  {
+    id: 18,
+    userId: 9,
+    caption: "Street photography",
+    imageUrl: "https://example.com/image18.jpg",
+    status: "draft",
+    createdAt: new Date("2024-08-16T15:55:00Z"),
+  },
+  {
+    id: 19,
+    userId: 10,
+    caption: "Cooking experiment",
+    imageUrl: "https://example.com/image19.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-17T06:25:00Z"),
+  },
+  {
+    id: 20,
+    userId: 2,
+    caption: "Throwback vacation",
+    imageUrl: "https://example.com/image20.jpg",
+    status: "published",
+    createdAt: new Date("2024-08-18T10:45:00Z"),
   },
 ];
-
 
 export default class PostModel {
   constructor(id, userId, caption, imageUrl, status) {
@@ -57,12 +176,40 @@ export default class PostModel {
   }
 
   // Get all posts
-  static findAll() {
+  static findAll(page = 1, limit = 10, caption = "") {
     if (!posts || posts.length <= 0) {
       throw new ApplicationError("Posts Not Found", 404);
     }
-    return posts;
-  }
+
+    // Filter by caption if provided
+    let filteredPosts = posts;
+    if (caption) {
+      filteredPosts = posts.filter((post) =>
+        post.caption.toLowerCase().includes(caption.toLowerCase())
+      );
+    }
+
+    if(filteredPosts){
+      filteredPosts = filteredPosts.filter(post =>  post.status != "draft" && post.status != "archived")
+    }
+    
+    if (!filteredPosts || filteredPosts.length <= 0) {
+      throw new ApplicationError("No Post Found With This Caption", 404);
+    }
+
+
+    // Pagination logic
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+    return {
+      posts: paginatedPosts,
+      totalPosts: filteredPosts.length,
+      totalPages: Math.ceil(filteredPosts.length / limit),
+      currentPage: page,
+    };
+  };
+
 
   // filtering the posts
   static filter(caption) {
@@ -168,11 +315,11 @@ export default class PostModel {
         `Invalid status transition from '${currentStatus}' to '${newStatus}'`,
         400
       );
-    };
+    }
 
     posts[postIndex].status = newStatus;
     return posts[postIndex];
-  };
+  }
 
   static getPostsSorted(by = "engagement") {
     if (!posts || posts.length === 0) {
@@ -196,7 +343,6 @@ export default class PostModel {
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt) // when two date objects are subtracted they are automatically converted to a number
       );
     }
-
 
     // Default: sort by engagement, then date
     return postsWithEngagement.sort((a, b) => {
