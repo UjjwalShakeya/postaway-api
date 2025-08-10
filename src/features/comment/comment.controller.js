@@ -5,11 +5,18 @@ export default class CommentController {
   async getAll(req, res,next) {
     try {
       const postId = parseInt(req.params.id);
-      const allComments = CommentModel.findCommentByPost(postId);
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const result = CommentModel.findCommentByPost(postId,page,limit);
       res.status(200).json({
         success: true,
         message: `comments for Post ${postId}`,
-        comments: allComments,
+        comments: result.comments,
+        pagination: {
+          totalPosts: result.totalComments,
+          totalPages: result.totalPages,
+          currentPage: result.currentPage,
+        },
       });
     } catch (err) {
       next(err);// calling next with error, error will be caught by errorhandler Middleware

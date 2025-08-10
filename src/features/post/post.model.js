@@ -189,14 +189,15 @@ export default class PostModel {
       );
     }
 
-    if(filteredPosts){
-      filteredPosts = filteredPosts.filter(post =>  post.status != "draft" && post.status != "archived")
+    if (filteredPosts) {
+      filteredPosts = filteredPosts.filter(
+        (post) => post.status != "draft" && post.status != "archived"
+      );
     }
-    
+
     if (!filteredPosts || filteredPosts.length <= 0) {
       throw new ApplicationError("No Post Found With This Caption", 404);
     }
-
 
     // Pagination logic
     const startIndex = (page - 1) * limit;
@@ -208,8 +209,7 @@ export default class PostModel {
       totalPages: Math.ceil(filteredPosts.length / limit),
       currentPage: page,
     };
-  };
-
+  }
 
   // filtering the posts
   static filter(caption) {
@@ -229,7 +229,9 @@ export default class PostModel {
 
   // Get post by ID
   static findById(id) {
-    const post = posts.find((p) => p.id === Number(id));
+    const post = posts.find(
+      (p) => p.id === id && p.status != "draft" && p.status != "archieved"
+    );
     if (!post) {
       throw new ApplicationError("Posts by Id Not Found", 404);
     }
