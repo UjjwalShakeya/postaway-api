@@ -33,10 +33,8 @@ app.use("/api/likes", LikeRouter);
 
 app.use("/api/bookmarks", bookmarkRouter);
 
-
 // calling error Handler
 app.use(errorHandler);
-
 
 // setup server 
 const PORT = 3000;

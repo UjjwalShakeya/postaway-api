@@ -2,6 +2,13 @@
 import UserModel from "./user.model.js";
 import jwt from "jsonwebtoken";
 
+// importing enviroment variables
+import dotenv from "dotenv";
+dotenv.config();
+
+// getting jwt token from the enviroment variable
+const jwtSecret = process.env.JWT_SECRET;
+
 export default class UserController {
   SignUp(req, res,next) {
     try {
@@ -21,7 +28,7 @@ export default class UserController {
         res.status(400).send("Invalid Credentials");
       }else{
         // 1. Create token
-        const token = jwt.sign({userID: result.id, email: result.email},"HSXFQH0CnnZc1hohcKH0NicmyfI9sizw",{expiresIn : "1h"});
+        const token = jwt.sign({userID: result.id, email: result.email},jwtSecret,{expiresIn : "1h"});
 
         // 2. send token
         return res.status(200).send(token);
