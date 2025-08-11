@@ -10,9 +10,9 @@ const userControllerInc = new UserController();
 const userRouter = express.Router();
 
 // user router for signup
-userRouter.post("/signup",userControllerInc.SignUp);
+userRouter.post("/signup",(req,res,next) => userControllerInc.SignUp(req,res,next));
 
 // user router for signin
-userRouter.post("/signin",userControllerInc.SignIn);
+userRouter.post("/signin",(req,res,next) => userControllerInc.SignIn(req,res,next));
 
 export default userRouter;
