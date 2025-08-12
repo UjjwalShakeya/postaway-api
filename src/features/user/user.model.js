@@ -20,16 +20,14 @@ export default class UserModel {
     };
     const newUser = new UserModel(Users.length + 1, name, email, password);
     Users.push(newUser);
-    console.log(Users);
     return newUser;
   }
 
-  static signIn(email, password) {
+  static signIn(email) {
     const isUserFound = Users.find(
-      (u) => u.email == email && u.password == password
-    );
+      (u) => u.email == email);
     if (!isUserFound) {
-      throw new ApplicationError("Incorrect Credentials",  401)
+      throw new ApplicationError("User not found", 401);
     }
     return isUserFound;
   }
