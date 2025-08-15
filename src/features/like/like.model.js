@@ -17,8 +17,8 @@ export default class LikeModel {
   }
 
   // get all likes
-  static getAll(postId) {
-    const allLikes = likes.filter((l) => l.postId == postId);
+  static async getAll(postId) {
+    const allLikes = likes.filter((l) => l.postId === postId);
     if (!allLikes || allLikes.length <= 0) {
       throw new ApplicationError("could not get likes of this post", 404);
     }
@@ -26,27 +26,32 @@ export default class LikeModel {
   }
 
   // like specific post post
-  static add(userId, postId) {
-    const newLike = new LikeModel(likes.length + 1, userId, postId);
-    const isLikeAdded = likes.push(newLike);
-    if (!isLikeAdded || isLikeAdded <= 0) {
-      throw new ApplicationError("post not found", 404);
+  static async add(userId, postId) {
+    // prevent duplicate likes
+    const existingLike = likes.find(
+      (l) => l.userId === userId && l.postId === postId
+    );
+    if (existingLike) {
+      throw new ApplicationError("User already liked this post", 400);
     }
+    const newLike = new LikeModel(likes.length + 1, userId, postId);
+    likes.push(newLike);
+
     return newLike;
   }
 
-  static delete(userId, postId) {
+  static async delete(userId, postId) {
     const likeIndex = likes.findIndex(
-      (l) => l.userId == userId && l.postId == postId
+      (l) => l.userId === userId && l.postId === postId
     );
     if (likeIndex == -1) {
-      throw new ApplicationError("like is not found", 404);
+      throw new ApplicationError("Like not found", 404);
     }
-    likes.splice(likeIndex, 1);
-    return likeIndex;
+    const [deletedLike] = likes.splice(likeIndex, 1);
+    return deletedLike;
   }
 
-static countByPostId(postId) {
-  return likes.filter(like => like.postId === postId).length;
-}
+  static async countByPostId(postId) {
+    return likes.filter((like) => like.postId === postId).length;
+  }
 }
