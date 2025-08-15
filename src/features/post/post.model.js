@@ -176,7 +176,7 @@ export default class PostModel {
   }
 
   // Get all posts
-  static findAll(page = 1, limit = 10, caption = "") {
+  static async findAll(page = 1, limit = 10, caption = "") {
     if (!posts || posts.length <= 0) {
       throw new ApplicationError("Posts Not Found", 404);
     }
@@ -212,7 +212,7 @@ export default class PostModel {
   }
 
   // filtering the posts
-  static filter(caption) {
+  static async filter(caption) {
     let filterPosts = posts;
     const searchWords = caption.toLowerCase().trim().split(/\s+/); // ["THIRD", "POST"]
 
@@ -222,15 +222,15 @@ export default class PostModel {
     });
 
     if (!filterPosts || filterPosts.length <= 0) {
-      throw new ApplicationError("Posts Not Found", 404);
+      throw new ApplicationError("No matching posts found", 404);
     }
     return filterPosts;
   }
 
   // Get post by ID
-  static findById(id) {
+  static async findById(id) {
     const post = posts.find(
-      (p) => p.id === id && p.status != "draft" && p.status != "archieved"
+      (p) => p.id === id && p.status !== "draft" && p.status !== "archieved"
     );
     if (!post) {
       throw new ApplicationError("Posts by Id Not Found", 404);
@@ -239,17 +239,9 @@ export default class PostModel {
   }
 
   // create a new post
-  static add(userID, caption, image, status) {
-    const missingFields = [];
-    if (!userID) missingFields.push("userID");
-    if (!caption) missingFields.push("caption");
-    if (!image) missingFields.push("image");
-
-    if (missingFields.length > 0) {
-      throw new ApplicationError(
-        `Could not create post: missing ${missingFields.join(", ")}`,
-        404
-      );
+  static async add(userID, caption, image, status) {
+    if (!userID || !caption || !image) {
+      throw new ApplicationError("Missing required fields", 400);
     }
     const Post = new PostModel(
       posts.length + 1,
@@ -258,34 +250,31 @@ export default class PostModel {
       image,
       status
     );
-    const newPost = posts.push(Post);
-    if (newPost <= 0) {
-      throw new ApplicationError("could not add post", 404);
-    }
+    posts.push(Post);
     return Post;
   }
 
   // find posts of logged-in users
-  static findByUserId(userId) {
+  static async findByUserId(userId) {
     const postsFound = posts.filter((p) => p.userId == userId);
     if (postsFound.length <= 0) {
-      throw new ApplicationError("could not get posts", 404);
+      throw new ApplicationError("No posts for this user", 404);
     }
     return postsFound;
   }
 
   // delete specific post
-  static delete(postId) {
+  static async delete(postId) {
     const ispostFound = posts.findIndex((p) => p.id == postId);
     if (ispostFound == -1) {
-      throw new ApplicationError("could not find post", 404);
+      throw new ApplicationError("Post not found", 404);
     }
     posts.splice(ispostFound, 1);
-    return posts[ispostFound];
+    return ispostFound;
   }
 
   // updating post
-  static update(id, data) {
+  static async update(id, data) {
     const postIndex = posts.findIndex((p) => p.id == id);
     if (postIndex == -1) {
       throw new ApplicationError("Post Not Found", 404);
@@ -296,7 +285,7 @@ export default class PostModel {
     };
   }
 
-  static updateStatus(userId, postId, newStatus) {
+  static async updateStatus(userId, postId, newStatus) {
     const postIndex = posts.findIndex(
       (p) => p.id == postId && p.userId == userId
     );
@@ -304,13 +293,13 @@ export default class PostModel {
       throw new ApplicationError("Post Not Found", 404);
     }
 
-    const currentStatus = posts[postIndex].status;
     const allowedTransitions = {
       draft: ["published"],
       published: ["archived"],
       archived: ["published"],
     };
-
+    const currentStatus = posts[postIndex].status;
+    
     // Check if newStatus is allowed for currentStatus
     if (!allowedTransitions[currentStatus]?.includes(newStatus)) {
       throw new ApplicationError(

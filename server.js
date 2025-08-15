@@ -8,8 +8,11 @@ import bookmarkRouter from "./src/features/bookmark/bookmark.routes.js";
 import {loggerMiddleware, errorLoggerMiddleware} from "./src/middlewares/logger.middleware.js";
 import errorHandler from "./src/middlewares/errorHandler.middleware.js";
 
+
+
 // creating an instance of express
 const app = express();
+
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing form data
