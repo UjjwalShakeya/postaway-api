@@ -176,7 +176,7 @@ export default class PostModel {
   }
 
   // Get all posts
-  static async findAll(page = 1, limit = 10, caption = "") {
+  static async findAll(page, limit, caption) {
     if (!posts || posts.length <= 0) {
       throw new ApplicationError("Posts Not Found", 404);
     }
@@ -240,9 +240,6 @@ export default class PostModel {
 
   // create a new post
   static async add(userID, caption, image, status) {
-    if (!userID || !caption || !image) {
-      throw new ApplicationError("Missing required fields", 400);
-    }
     const Post = new PostModel(
       posts.length + 1,
       parseInt(userID),
@@ -256,7 +253,7 @@ export default class PostModel {
 
   // find posts of logged-in users
   static async findByUserId(userId) {
-    const postsFound = posts.filter((p) => p.userId == userId);
+    const postsFound = posts.filter((p) => p.userId === userId);
     if (postsFound.length <= 0) {
       throw new ApplicationError("No posts for this user", 404);
     }
@@ -265,19 +262,19 @@ export default class PostModel {
 
   // delete specific post
   static async delete(postId) {
-    const ispostFound = posts.findIndex((p) => p.id == postId);
-    if (ispostFound == -1) {
+    const ispostFound = posts.findIndex((p) => p.id === postId);
+    if (ispostFound === -1) {
       throw new ApplicationError("Post not found", 404);
     }
     posts.splice(ispostFound, 1);
-    return ispostFound;
+    return posts[ispostFound];
   }
 
   // updating post
-  static async update(id, data) {
-    const postIndex = posts.findIndex((p) => p.id == id);
+  static async update(userId,id, data) {
+    const postIndex = posts.findIndex((p) => p.id === id && p.userId === userId);
     if (postIndex == -1) {
-      throw new ApplicationError("Post Not Found", 404);
+      throw new ApplicationError("Post Not Found Update failed", 404);
     }
     posts[postIndex] = {
       ...posts[postIndex],
@@ -287,7 +284,7 @@ export default class PostModel {
 
   static async updateStatus(userId, postId, newStatus) {
     const postIndex = posts.findIndex(
-      (p) => p.id == postId && p.userId == userId
+      (p) => p.id === postId && p.userId === userId
     );
     if (postIndex === -1) {
       throw new ApplicationError("Post Not Found", 404);
@@ -312,7 +309,7 @@ export default class PostModel {
     return posts[postIndex];
   }
 
-  static getPostsSorted(by = "engagement") {
+  static async getPostsSorted(by = "engagement") {
     if (!posts || posts.length === 0) {
       throw new ApplicationError("No posts found", 404);
     }

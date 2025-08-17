@@ -31,7 +31,7 @@ export default class CommentModel {
     this.postId = postId;
     this.content = content;
   }
-  static findCommentByPost(id,page,limit) {
+  static async findCommentByPost(id,page,limit) {
     const isPostFoud = PostModel.findById(id);
 
     if (isPostFoud) {
@@ -55,7 +55,7 @@ export default class CommentModel {
     }
   }
 
-  static add(userId, postId, content) {
+  static async add(userId, postId, content) {
     const newComment = new CommentModel(
       comments.length + 1,
       userId,
@@ -69,7 +69,7 @@ export default class CommentModel {
       throw new ApplicationError("something went wrong adding comment", 400);
     }
   }
-  static remove(id, userId) {
+  static async remove(id, userId) {
     const commentIndex = comments.findIndex(
       (c) => c.id == id && c.userId == userId
     );
@@ -82,7 +82,7 @@ export default class CommentModel {
     }
     return isDeleted;
   }
-  static update(id, content, userId) {
+  static async update(id, content, userId) {
     const commentIndex = comments.findIndex(
       (c) => c.userId == userId && c.id == id
     );
@@ -94,7 +94,7 @@ export default class CommentModel {
     return comments[commentIndex];
   }
 
-  static countByPostId(postId) {
+  static async countByPostId(postId) {
     return comments.filter((comment) => comment.postId === postId).length;
   }
 }

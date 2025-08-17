@@ -2,12 +2,15 @@
 import CommentModel from "../comment/comment.model.js";
 
 export default class CommentController {
-  async getAll(req, res,next) {
+  async getAll(req, res, next) {
     try {
       const postId = parseInt(req.params.id);
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 5;
-      const result = CommentModel.findCommentByPost(postId,page,limit);
+
+      if (!postId) throw new ApplicationError("Missing post ID ", 400);
+
+      const result = await CommentModel.findCommentByPost(postId, page, limit);
       res.status(200).json({
         success: true,
         message: `comments for Post ${postId}`,
@@ -19,23 +22,33 @@ export default class CommentController {
         },
       });
     } catch (err) {
-      next(err);// calling next with error, error will be caught by errorhandler Middleware
+      next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
 
   async createComment(req, res, next) {
     try {
       const postId = parseInt(req.params.id);
-      const userId = parseInt(req.userID);
+      const userId = req.userID;
       const { content } = req.body;
-      const newComment = CommentModel.add(userId, postId, content);
-      res.status(200).json({
+      if (!postId) throw new ApplicationError("Missing post ID ", 400);
+
+      if (!content || content.trim() === "") {
+        throw new ApplicationError("Comment content cannot be empty", 400);
+      }
+      // Check if post exists
+      const postExists = await PostModel.findById(postId);
+      if (!postExists) {
+        throw new ApplicationError("Post not found", 404);
+      }
+      const newComment = await CommentModel.add(userId, postId, content);
+      res.status(201).json({
         success: true,
         message: "New Comment has been added for Post",
         Comment: newComment,
       });
     } catch (err) {
-      next(err);// calling next with error, error will be caught by errorhandler Middleware
+      next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
 
@@ -43,13 +56,13 @@ export default class CommentController {
     try {
       const commentId = parseInt(req.params.id);
       const userID = parseInt(req.userID);
-      CommentModel.remove(commentId, userID);
+      await CommentModel.remove(commentId, userID);
       res.status(200).json({
         success: true,
         message: `Comment ${commentId} has been deleted`,
       });
     } catch (err) {
-      next(err);// calling next with error, error will be caught by errorhandler Middleware
+      next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
   async updateComment(req, res, next) {
@@ -57,14 +70,18 @@ export default class CommentController {
       const commentId = parseInt(req.params.id);
       const { content } = req.body;
       const userId = req.userID;
-      const updatedComment = CommentModel.update(commentId, content,userId);
+      const updatedComment = await CommentModel.update(
+        commentId,
+        content,
+        userId
+      );
       res.status(200).json({
         success: true,
-        message: `You comment with id ${commentId} has been deleted`, 
+        message: `You comment with id ${commentId} has been deleted`,
         UpdatedComment: updatedComment,
       });
     } catch (err) {
-      next(err);// calling next with error, error will be caught by errorhandler Middleware
+      next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
 }

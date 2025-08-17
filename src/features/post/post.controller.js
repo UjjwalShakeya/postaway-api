@@ -2,7 +2,6 @@
 import PostModel from "./post.model.js";
 
 export default class PostController {
-
   // retrieve all posts
   async getAllPosts(req, res, next) {
     try {
@@ -25,7 +24,7 @@ export default class PostController {
     } catch (err) {
       next(err); // error handled by middleware
     }
-  };
+  }
 
   // retrieve filtered posts
   async getFilteredPosts(req, res, next) {
@@ -60,9 +59,13 @@ export default class PostController {
   // retrieve post by the user credentials
   async getPostsByUser(req, res, next) {
     try {
-      const userID = parseInt(req.userID);
+      const userID = req.userID;
+      if (!userID) throw new ApplicationError("User ID required", 400);
+
       const postsByUserId = await PostModel.findByUserId(userID);
-      res.status(200).json({ success: true, message: "Post found", data: postsByUserId });
+      res
+        .status(200)
+        .json({ success: true, message: "Post found", data: postsByUserId });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
@@ -71,11 +74,16 @@ export default class PostController {
   // created new post
   async createPost(req, res, next) {
     try {
-      const userID = parseInt(req.userID);
+      const userID = req.userID;
       const { caption, status } = req.body;
       const imageUrl = req.file.filename;
+
       if (!imageUrl) {
         return res.status(400).json({ message: "Image file is required" });
+      }
+
+      if (!caption) {
+        return res.status(400).json({ message: "Caption field is required" });
       }
 
       // Allow only valid statuses
@@ -84,7 +92,12 @@ export default class PostController {
         ? status
         : "published";
 
-      const newPost = await PostModel.add(userID, caption, imageUrl, postStatus);
+      const newPost = await PostModel.add(
+        userID,
+        caption,
+        imageUrl,
+        postStatus
+      );
       res.status(201).json({
         success: true,
         message: "new post has been created",
@@ -99,10 +112,17 @@ export default class PostController {
   async deletePost(req, res, next) {
     try {
       const postID = parseInt(req.params.id);
-      await PostModel.delete(postID);
+      if (!postID) {
+        return res.status(400).json({ message: "Post id is required" });
+      }
+      const deletedPost = await PostModel.delete(postID);
       res
         .status(200)
-        .json({ success: true, message: `${postID} post has been deleted` });
+        .json({
+          success: true,
+          message: `${postID} post has been deleted`,
+          deletedPost,
+        });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
@@ -111,9 +131,14 @@ export default class PostController {
   // update the specific post
   async updatePost(req, res, next) {
     try {
+      const userID = req.userID;
       const postID = parseInt(req.params.id);
       const newData = req.body;
-      await PostModel.update(postID, newData);
+
+      if (!postID || !userID)
+        throw new ApplicationError("Missing post ID or user ID", 400);
+
+      await PostModel.update(userID, postID, newData);
       res
         .status(200)
         .json({ success: true, message: `${postID} post has been updated` });
@@ -126,15 +151,18 @@ export default class PostController {
   async postStatus(req, res, next) {
     try {
       const postID = parseInt(req.params.id);
-      const userID = parseInt(req.userID);
+      const userID = req.userID;
       const { status } = req.body;
+
+      if (!postID || !userID) throw new ApplicationError("Missing post ID or user ID", 400);
+
       const isPostStatusUpdated = await PostModel.updateStatus(
         userID,
         postID,
         status
       );
       res
-        .status(201)
+        .status(200)
         .json({ success: true, updatedStatus: isPostStatusUpdated });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
@@ -144,8 +172,11 @@ export default class PostController {
   async getSortedPosts(req, res, next) {
     try {
       const allowedSorts = ["engagement", "date"];
-      const sortBy = allowedSorts.includes(req.query.sortBy) ? req.query.sortBy : "engagement";
-      const sortedPosts = PostModel.getPostsSorted(sortBy);
+      const sortBy = allowedSorts.includes(req.query.sortBy)
+        ? req.query.sortBy
+        : "engagement";
+
+      const sortedPosts = await PostModel.getPostsSorted(sortBy);
       res.status(200).json({
         success: true,
         message: `Sorted posts by ${sortBy}`,

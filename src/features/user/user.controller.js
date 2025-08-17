@@ -13,10 +13,15 @@ export default class UserController {
     try {
       const { name, email, password } = req.body;
 
-      // Double-check input 
+      // Double-check input
       if (!name || !email || !password) {
         return res.status(400).json({ message: "All fields are required" });
       }
+
+      // checking if the user is already exit
+      const existingUser = await UserModel.findByEmail(email);
+      if (existingUser)
+        throw new ApplicationError("User already exists with this email", 409);
 
       const hashedPassword = await bcrypt.hash(password, 12);
       const user = await UserModel.signUp(name, email, hashedPassword);
@@ -34,7 +39,6 @@ export default class UserController {
         token,
         expiresIn: "1h",
       });
-      
     } catch (err) {
       next(err);
     }
@@ -46,17 +50,23 @@ export default class UserController {
 
       // checking email and password if any of them is missing then throw error
       if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required" });
+        return res
+          .status(400)
+          .json({ message: "Email and password are required" });
       }
 
-      const result = await UserModel.signIn(email);
-      const isMatch = await bcrypt.compare(password, result.password);
+      const user = await UserModel.findByEmail(email);
+      if (!user) {
+      // Don’t reveal whether email exists
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid Credentials" });
-      }
+      };
 
       const token = jwt.sign(
-        { userID: result.id, email: result.email },
+        { userID: user.id, email: user.email },
         jwtSecret,
         { expiresIn: "1h" }
       );
@@ -66,9 +76,9 @@ export default class UserController {
         token,
         expiresIn: "1h",
       });
-
+      
     } catch (err) {
       next(err);
     }
   }
-};
+}

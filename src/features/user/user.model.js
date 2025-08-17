@@ -1,8 +1,13 @@
-// importing required modules 
+// importing required modules
 import ApplicationError from "../../../utils/ApplicationError.js";
 
 let Users = [
-  { id: 1, name: "Ujjwal Shakeya", email: "ujjwalshakeya1@gmail.com", password: "abc123" }
+  {
+    id: 1,
+    name: "Ujjwal Shakeya",
+    email: "ujjwalshakeya1@gmail.com",
+    password: "abc123",
+  },
 ];
 
 export default class UserModel {
@@ -14,21 +19,12 @@ export default class UserModel {
   }
 
   static async signUp(name, email, password) {
-    const existingUser = Users.find((u) => u.email === email);
-    if (existingUser) {
-      throw new ApplicationError("User already exists with this email", 409);
-    }
     const newUser = new UserModel(Users.length + 1, name, email, password);
     Users.push(newUser);
     return newUser;
   }
 
-  static async signIn(email) {
-    const user = Users.find((u) => u.email === email);
-    if (!user) {
-      throw new ApplicationError("User not found", 404);
-    };
-    return user;
+  static async findByEmail(email) {
+    return Users.find((u) => u.email === email);
   }
 }
-
