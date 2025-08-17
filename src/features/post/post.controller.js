@@ -56,9 +56,11 @@ export default class PostController {
     try {
       const id = parseInt(req.params.id);
       // Validate ID before querying
-    if (isNaN(id)) {
-      return res.status(400).json({ success: false, message: "Invalid post ID" });
-    }
+      if (isNaN(id)) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid post ID" });
+      }
       const post = await PostModel.findById(id);
       res
         .status(200)
@@ -90,12 +92,16 @@ export default class PostController {
       const { caption, status } = req.body;
 
       if (!req.file) {
-      return res.status(400).json({ success: false, message: "Image file is required" });
-    }
+        return res
+          .status(400)
+          .json({ success: false, message: "Image file is required" });
+      }
 
-     if (!caption || caption.trim() === "") {
-      return res.status(400).json({ success: false, message: "Caption field is required" });
-    }
+      if (!caption || caption.trim() === "") {
+        return res
+          .status(400)
+          .json({ success: false, message: "Caption field is required" });
+      }
 
       // Allow only valid statuses
       const allowedStatuses = ["published", "draft"];
@@ -119,21 +125,20 @@ export default class PostController {
     }
   }
 
-
   // update the new post
   async deletePost(req, res, next) {
     try {
       const postID = parseInt(req.params.id);
 
       if (Number.isNaN(postID)) {
-      return res.status(400).json({ message: "Valid post ID is required" });
-    }
+        return res.status(400).json({ message: "Valid post ID is required" });
+      }
 
       const deletedPost = await PostModel.delete(postID);
       res.status(200).json({
         success: true,
         message: `${postID} post has been deleted`,
-        data: deletedPost
+        data: deletedPost,
       });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
@@ -150,10 +155,15 @@ export default class PostController {
       if (!postID || !userID)
         throw new ApplicationError("Missing post ID or user ID", 400);
 
-      await PostModel.update(userID, postID, newData);
+      const updatedPost = await PostModel.update(userID, postID, newData);
+      
       res
         .status(200)
-        .json({ success: true, message: `${postID} post has been updated` });
+        .json({
+          success: true,
+          message: `${postID} post has been updated`,
+          data: updatedPost,
+        });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }

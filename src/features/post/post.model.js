@@ -285,13 +285,16 @@ export default class PostModel {
     const postIndex = posts.findIndex(
       (p) => p.id === id && p.userId === userId
     );
-    if (postIndex == -1) {
-      throw new ApplicationError("Post Not Found Update failed", 404);
+    if (postIndex === -1) {
+      throw new ApplicationError("Post not found or you don't have permission", 404);
     }
     posts[postIndex] = {
       ...posts[postIndex],
       ...data,
+      id, // ensure ID is not accidentally overwritten
+      userId, // ensure ownership stays intact
     };
+    return posts[postIndex];
   }
 
   static async updateStatus(userId, postId, newStatus) {
