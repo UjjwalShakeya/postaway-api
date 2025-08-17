@@ -259,9 +259,13 @@ export default class PostModel {
 
   // find posts of logged-in users
   static async findByUserId(userId) {
-    const postsFound = posts.filter((p) => p.userId === userId);
-    if (postsFound.length <= 0) {
-      throw new ApplicationError("No posts for this user", 404);
+    const postsFound = posts.filter(
+      (p) =>
+        p.userId === userId && p.status !== "draft" && p.status !== "archived"
+    );
+
+    if (userPosts.length === 0) {
+      throw new ApplicationError("No posts found for this user", 404);
     }
     return postsFound;
   }
