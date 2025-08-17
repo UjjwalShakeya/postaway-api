@@ -73,7 +73,7 @@ export let posts = [
     userId: 1,
     caption: "Workout session",
     imageUrl: "https://example.com/image9.jpg",
-    status: "published",
+    status: "archived",
     createdAt: new Date("2024-08-07T05:50:00Z"),
   },
   {
@@ -236,10 +236,10 @@ export default class PostModel {
   // Get post by ID
   static async findById(id) {
     const post = posts.find(
-      (p) => p.id === id && p.status !== "draft" && p.status !== "archieved"
+      (p) => p.id === id && p.status !== "draft" && p.status !== "archived"
     );
     if (!post) {
-      throw new ApplicationError("Posts by Id Not Found", 404);
+      throw new ApplicationError(`Post with ID ${id} not found`, 404);
     }
     return post;
   }

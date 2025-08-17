@@ -55,6 +55,10 @@ export default class PostController {
   async getPostById(req, res, next) {
     try {
       const id = parseInt(req.params.id);
+      // Validate ID before querying
+    if (isNaN(id)) {
+      return res.status(400).json({ success: false, message: "Invalid post ID" });
+    }
       const post = await PostModel.findById(id);
       res
         .status(200)
