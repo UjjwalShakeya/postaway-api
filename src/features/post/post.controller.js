@@ -29,13 +29,21 @@ export default class PostController {
   // retrieve filtered posts
   async getFilteredPosts(req, res, next) {
     try {
-      if (!req.query.caption) {
+      const { caption } = req.query;
+      if (!caption) {
         return res.status(400).json({ message: "Caption query is required" });
       }
       const filteredPosts = await PostModel.filter(req.query.caption);
+
+      if (!filteredPosts || filteredPosts.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No posts found with given caption" });
+      }
+
       res.status(200).json({
         success: true,
-        message: "Filtered Posts",
+        message: "Filtered posts retrieved successfully",
         data: filteredPosts,
       });
     } catch (err) {
@@ -116,13 +124,11 @@ export default class PostController {
         return res.status(400).json({ message: "Post id is required" });
       }
       const deletedPost = await PostModel.delete(postID);
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: `${postID} post has been deleted`,
-          deletedPost,
-        });
+      res.status(200).json({
+        success: true,
+        message: `${postID} post has been deleted`,
+        deletedPost,
+      });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
@@ -154,7 +160,8 @@ export default class PostController {
       const userID = req.userID;
       const { status } = req.body;
 
-      if (!postID || !userID) throw new ApplicationError("Missing post ID or user ID", 400);
+      if (!postID || !userID)
+        throw new ApplicationError("Missing post ID or user ID", 400);
 
       const isPostStatusUpdated = await PostModel.updateStatus(
         userID,

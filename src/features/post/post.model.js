@@ -205,8 +205,13 @@ export default class PostModel {
     }
 
     if (startIndex >= filteredPosts.length) {
-  return { posts: [], totalPosts: filteredPosts.length, totalPages: Math.ceil(filteredPosts.length / limit), currentPage: page };
-}
+      return {
+        posts: [],
+        totalPosts: filteredPosts.length,
+        totalPages: Math.ceil(filteredPosts.length / limit),
+        currentPage: page,
+      };
+    }
 
     return {
       posts: paginatedPosts,
@@ -218,18 +223,14 @@ export default class PostModel {
 
   // filtering the posts
   static async filter(caption) {
-    let filterPosts = posts;
-    const searchWords = caption.toLowerCase().trim().split(/\s+/); // ["THIRD", "POST"]
+    const searchWords = caption.toLowerCase().trim().split(/\s+/);
 
-    filterPosts = posts.filter((post) => {
-      const postCaption = post.caption.toLowerCase();
+    return posts.filter((post) => {
+      if (post.status === "draft" || post.status === "archived") return false;
+
+      const postCaption = post.caption.toLowerCase().trim();
       return searchWords.every((word) => postCaption.includes(word));
     });
-
-    if (!filterPosts || filterPosts.length <= 0) {
-      throw new ApplicationError("No matching posts found", 404);
-    }
-    return filterPosts;
   }
 
   // Get post by ID
