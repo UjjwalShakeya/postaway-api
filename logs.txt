@@ -37,3 +37,5 @@
 [2025-08-17T18:41:23.387Z] info: GET /api/posts/filter?caption=post Request Body Is Empty
 [2025-08-17T18:42:00.727Z] info: GET /api/posts/filter?caption=post Request Body Is Empty
 [2025-08-17T18:42:30.265Z] info: GET /api/posts/filter?caption=post Request Body Is Empty
+[2025-08-17T19:10:59.975Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-17T19:11:20.102Z] info: POST /api/posts/ Request Body Is Empty

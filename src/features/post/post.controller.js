@@ -88,15 +88,14 @@ export default class PostController {
     try {
       const userID = req.userID;
       const { caption, status } = req.body;
-      const imageUrl = req.file.filename;
 
-      if (!imageUrl) {
-        return res.status(400).json({ message: "Image file is required" });
-      }
+      if (!req.file) {
+      return res.status(400).json({ success: false, message: "Image file is required" });
+    }
 
-      if (!caption) {
-        return res.status(400).json({ message: "Caption field is required" });
-      }
+     if (!caption || caption.trim() === "") {
+      return res.status(400).json({ success: false, message: "Caption field is required" });
+    }
 
       // Allow only valid statuses
       const allowedStatuses = ["published", "draft"];
@@ -106,8 +105,8 @@ export default class PostController {
 
       const newPost = await PostModel.add(
         userID,
-        caption,
-        imageUrl,
+        caption.trim(),
+        req.file.filename,
         postStatus
       );
       res.status(201).json({
