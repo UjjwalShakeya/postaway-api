@@ -302,7 +302,7 @@ export default class PostModel {
       (p) => p.id === postId && p.userId === userId
     );
     if (postIndex === -1) {
-      throw new ApplicationError("Post Not Found", 404);
+      throw new ApplicationError("Post not found or unauthorized", 404);
     }
 
     const allowedTransitions = {

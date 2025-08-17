@@ -156,14 +156,12 @@ export default class PostController {
         throw new ApplicationError("Missing post ID or user ID", 400);
 
       const updatedPost = await PostModel.update(userID, postID, newData);
-      
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: `${postID} post has been updated`,
-          data: updatedPost,
-        });
+
+      res.status(200).json({
+        success: true,
+        message: `${postID} post has been updated`,
+        data: updatedPost,
+      });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
@@ -176,8 +174,13 @@ export default class PostController {
       const userID = req.userID;
       const { status } = req.body;
 
-      if (!postID || !userID)
+      if (!postID || !userID) {
         throw new ApplicationError("Missing post ID or user ID", 400);
+      }
+
+      if (!status) {
+        throw new ApplicationError("Status field is required", 400);
+      }
 
       const isPostStatusUpdated = await PostModel.updateStatus(
         userID,
@@ -186,7 +189,7 @@ export default class PostController {
       );
       res
         .status(200)
-        .json({ success: true, updatedStatus: isPostStatusUpdated });
+        .json({ success: true,message: `Post ${postID} status updated successfully`, data: isPostStatusUpdated });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
