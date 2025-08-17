@@ -195,14 +195,19 @@ export default class PostModel {
       );
     }
 
-    if (!filteredPosts || filteredPosts.length <= 0) {
-      throw new ApplicationError("No Post Found With This Caption", 404);
-    }
-
     // Pagination logic
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+
+    if (!filteredPosts || filteredPosts.length <= 0) {
+      return { posts: [], totalPosts: 0, totalPages: 0, currentPage: page };
+    }
+
+    if (startIndex >= filteredPosts.length) {
+  return { posts: [], totalPosts: filteredPosts.length, totalPages: Math.ceil(filteredPosts.length / limit), currentPage: page };
+}
+
     return {
       posts: paginatedPosts,
       totalPosts: filteredPosts.length,
@@ -271,8 +276,10 @@ export default class PostModel {
   }
 
   // updating post
-  static async update(userId,id, data) {
-    const postIndex = posts.findIndex((p) => p.id === id && p.userId === userId);
+  static async update(userId, id, data) {
+    const postIndex = posts.findIndex(
+      (p) => p.id === id && p.userId === userId
+    );
     if (postIndex == -1) {
       throw new ApplicationError("Post Not Found Update failed", 404);
     }
@@ -296,7 +303,7 @@ export default class PostModel {
       archived: ["published"],
     };
     const currentStatus = posts[postIndex].status;
-    
+
     // Check if newStatus is allowed for currentStatus
     if (!allowedTransitions[currentStatus]?.includes(newStatus)) {
       throw new ApplicationError(

@@ -11,6 +11,7 @@ const PostControllerInc = new PostController();
 // creating post router with express
 const PostRouter = express.Router();
 
+// Retrieve all posts
 PostRouter.get("/all", (req, res, next) =>
   PostControllerInc.getAllPosts(req, res, next)
 ); // Retrieve all posts

@@ -19,6 +19,7 @@ userRouter.post("/signin", (req, res, next) =>
   userControllerInc.SignIn(req, res, next)
 );
 
+// user router for reset password
 userRouter.post("/reset-password", (req, res, next) =>
   userControllerInc.ResetPassword(req, res, next)
 );

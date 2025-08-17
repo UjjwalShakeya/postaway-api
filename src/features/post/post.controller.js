@@ -6,8 +6,8 @@ export default class PostController {
   async getAllPosts(req, res, next) {
     try {
       const caption = req.query.caption || "";
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
+      const page = Math.max(parseInt(req.query.page) || 1, 1);
+      const limit = Math.max(parseInt(req.query.limit) || 10, 1);
 
       const result = await PostModel.findAll(page, limit, caption);
 
