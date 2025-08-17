@@ -276,8 +276,8 @@ export default class PostModel {
     if (ispostFound === -1) {
       throw new ApplicationError("Post not found", 404);
     }
-    posts.splice(ispostFound, 1);
-    return posts[ispostFound];
+    const [deletedPost] = posts.splice(postIndex, 1);
+    return deletedPost;
   }
 
   // updating post

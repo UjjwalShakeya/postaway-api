@@ -119,18 +119,21 @@ export default class PostController {
     }
   }
 
+
   // update the new post
   async deletePost(req, res, next) {
     try {
       const postID = parseInt(req.params.id);
-      if (!postID) {
-        return res.status(400).json({ message: "Post id is required" });
-      }
+
+      if (Number.isNaN(postID)) {
+      return res.status(400).json({ message: "Valid post ID is required" });
+    }
+
       const deletedPost = await PostModel.delete(postID);
       res.status(200).json({
         success: true,
         message: `${postID} post has been deleted`,
-        deletedPost,
+        data: deletedPost
       });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
