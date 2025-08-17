@@ -27,4 +27,12 @@ export default class UserModel {
   static async findByEmail(email) {
     return Users.find((u) => u.email === email);
   }
+  
+  static async updatePassword(email, newPassword) {
+    const user = Users.find((u) => u.email === email);
+    if (user) {
+      user.password = newPassword;
+    }
+    return user;
+  }
 }

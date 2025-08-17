@@ -76,9 +76,45 @@ export default class UserController {
         token,
         expiresIn: "1h",
       });
-      
+
+    } catch (err) {
+      next(err);
+    }
+  } 
+
+    // Simple Reset (with old password verification) later when using email services and th db we can easily reset password without needing the old one 
+    async ResetPassword(req, res, next) {
+    try {
+      const { email, oldPassword, newPassword } = req.body;
+
+      // validate inputs
+      if (!email || !oldPassword || !newPassword) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
+
+      // find user
+      const user = await UserModel.findByEmail(email);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // check old password
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: "Old password is incorrect" });
+      }
+
+      // hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+      // update in model
+      await UserModel.updatePassword(email, hashedPassword);
+
+      return res.status(200).json({ message: "Password updated successfully" });
+
     } catch (err) {
       next(err);
     }
   }
+
 }

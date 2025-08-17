@@ -19,4 +19,8 @@ userRouter.post("/signin", (req, res, next) =>
   userControllerInc.SignIn(req, res, next)
 );
 
+userRouter.post("/reset-password", (req, res, next) =>
+  userControllerInc.ResetPassword(req, res, next)
+);
+
 export default userRouter;
