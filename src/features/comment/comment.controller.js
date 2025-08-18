@@ -84,6 +84,15 @@ export default class CommentController {
       const commentId = parseInt(req.params.id);
       const { content } = req.body;
       const userId = req.userID;
+
+      if (!commentId) {
+      throw new ApplicationError("Missing comment ID", 400);
+    }
+
+    if (!content || content.trim() === "") {
+      throw new ApplicationError("Comment content cannot be empty", 400);
+    }
+    
       const updatedComment = await CommentModel.update(
         commentId,
         content,
@@ -92,7 +101,7 @@ export default class CommentController {
       res.status(200).json({
         success: true,
         message: `You comment with id ${commentId} has been deleted`,
-        UpdatedComment: updatedComment,
+        data: updatedComment,
       });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware

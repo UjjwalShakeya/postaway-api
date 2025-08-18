@@ -82,16 +82,23 @@ export default class CommentModel {
     return deletedComment;
   }
 
-  
   static async update(id, content, userId) {
     const commentIndex = comments.findIndex(
-      (c) => c.userId == userId && c.id == id
+      (c) => c.userId === userId && c.id === id
     );
 
-    if (commentIndex == -1) {
-      throw new ApplicationError("could not find this comment", 404);
+    if (commentIndex === -1) {
+      throw new ApplicationError("Comment not found or not authorized", 404);
     }
-    comments[commentIndex].content = content;
+    const oldContent = comments[commentIndex].content;
+    if (oldContent === content.trim()) {
+      throw new ApplicationError(
+        "New content must be different from the old one",
+        400
+      );
+    }
+
+    comments[commentIndex].content = content.trim();
     return comments[commentIndex];
   }
 
