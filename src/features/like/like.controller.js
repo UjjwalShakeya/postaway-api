@@ -5,17 +5,19 @@ export default class LikeController {
   async getAllLikes(req, res, next) {
     try {
       const postId = parseInt(req.params.postid);
-      if (!postId) {
-        return res.status(400).json({ success: false, message: "Invalid postId" });
-      }
+
+      if (isNaN(postId)) {
+      throw new ApplicationError("Invalid post ID", 400);
+    }
       const allLikes = await LikeModel.getAll(postId); 
+
        res.status(200).json({
         success: true,
         message: `All likes have been retrieved from specific post`,
-        Likes: allLikes,
+        data: allLikes, // standardize key as `data`
       });
     } catch (err) {
-      next(err);// calling next with error, error will be caught by errorhandler Middleware
+      next(err); // passes to errorHandler middleware
     }
   };
 

@@ -19,15 +19,14 @@ export default class LikeModel {
   // get all likes
   static async getAll(postId) {
     const allLikes = likes.filter((l) => l.postId === postId);
-    if (!allLikes || allLikes.length <= 0) {
-      throw new ApplicationError("could not get likes of this post", 404);
+    if (allLikes.length === 0) {
+      throw new ApplicationError("No likes found for this post", 404);
     }
     return allLikes;
   }
 
   // like specific post post
   static async add(userId, postId) {
-    
     // prevent duplicate likes
     const existingLike = likes.find(
       (l) => l.userId === userId && l.postId === postId
