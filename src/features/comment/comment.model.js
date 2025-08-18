@@ -68,17 +68,21 @@ export default class CommentModel {
   }
   static async remove(id, userId) {
     const commentIndex = comments.findIndex(
-      (c) => c.id == id && c.userId == userId
+      (c) => c.id === id && c.userId === userId
     );
     if (commentIndex == -1) {
       throw new ApplicationError("comment not found", 404);
     }
-    const isDeleted = comments.splice(commentIndex, 1);
-    if (!isDeleted) {
-      throw new ApplicationError("something went wrong deleting post", 404);
+    const [deletedComment] = comments.splice(commentIndex, 1);
+
+    if (!deletedComment) {
+      throw new ApplicationError("Something went wrong deleting comment", 500);
     }
-    return isDeleted;
+
+    return deletedComment;
   }
+
+  
   static async update(id, content, userId) {
     const commentIndex = comments.findIndex(
       (c) => c.userId == userId && c.id == id

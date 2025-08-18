@@ -64,15 +64,21 @@ export default class CommentController {
     try {
       const commentId = parseInt(req.params.id);
       const userID = parseInt(req.userID);
-      await CommentModel.remove(commentId, userID);
+
+      if (isNaN(commentId)) {
+      throw new ApplicationError("Invalid comment ID", 400);
+    }
+
+      const deletedComment  = await CommentModel.remove(commentId, userID);
       res.status(200).json({
         success: true,
-        message: `Comment ${commentId} has been deleted`,
+        message: `Comment ${commentId} has been deleted`,data:deletedComment
       });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware
     }
   }
+
   async updateComment(req, res, next) {
     try {
       const commentId = parseInt(req.params.id);
