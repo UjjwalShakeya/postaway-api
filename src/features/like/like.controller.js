@@ -23,12 +23,16 @@ export default class LikeController {
     try {
       const userId = req.userID;
       const postId = parseInt(req.params.postId);
+
+      if (isNaN(postId)) {
+      throw new ApplicationError("Invalid post ID", 400);
+    }
       
       const newLike = await LikeModel.add(userId, postId);
       res.status(200).json({
         success: true,
         message: `like is added to ${postId}`,
-        NewLike: newLike,
+        data: newLike,
       });
     } catch (err) {
       next(err);// calling next with error, error will be caught by errorhandler Middleware
