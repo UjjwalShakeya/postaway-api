@@ -23,14 +23,19 @@ export default class bookmarkController {
   }
 
   async createBookmark(req, res, next) {
-    const userId = parseInt(req.userID);
-    const postId = parseInt(req.params.postid);
-
     try {
-      bookmarkModel.add(userId, postId);
+      const userId = req.userID;
+      const postId = parseInt(req.params.postid);
+
+      if (isNaN(userId) || isNaN(postId)) {
+        throw new ApplicationError("Invalid user ID Or user Post", 400);
+      }
+      const newBookmark = await bookmarkModel.add(userId, postId);
+      
       res.status(201).json({
         success: true,
         message: `your post with id ${postId} has been bookmarked`,
+        data:newBookmark
       });
     } catch (err) {
       next(err);

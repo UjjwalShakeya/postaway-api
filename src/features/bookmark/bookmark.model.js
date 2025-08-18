@@ -48,34 +48,34 @@ export default class bookmarkModel {
     return bookmarkedPosts;
   }
 
-  static add(userId, postId) {
+  static async add(userId, postId) {
+    // Check if post exists
+    const post = await PostModel.findById(postId);
+    if (!post) {
+      throw new ApplicationError("Post not found", 404);
+    }
+
+    if (post.status === "draft") {
+      throw new ApplicationError("Cannot bookmark a draft post", 400);
+    }
+
+    // Prevent duplicate bookmarks
     const alreadyBookmarked = AllBookMarks.some(
       (bookmark) => bookmark.userId === userId && bookmark.postId === postId
     );
-
     if (alreadyBookmarked) {
-      throw new ApplicationError("already bookmarked", 400);
+      throw new ApplicationError("Post already bookmarked", 400);
     }
 
-    const post = PostModel.findById(postId);
-    if (post.status == "draft") {
-      throw new ApplicationError("Post is in draft", 400);
-    }
-
-    const newBookMark = new bookmarkModel(
+    // Create new bookmark
+    const newBookmark = new bookmarkModel(
       AllBookMarks.length + 1,
       userId,
       postId
     );
+    AllBookMarks.push(newBookmark);
 
-    if (!newBookMark) {
-      throw new ApplicationError(
-        "something went wrong while adding to bookmark",
-        400
-      );
-    }
-    AllBookMarks.push(newBookMark);
-    return newBookMark;
+    return newBookmark;
   }
 
   static delete(userId, postId) {
