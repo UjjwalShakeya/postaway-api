@@ -8,7 +8,7 @@ let AllBookMarks = [
     id: 1,
     userId: 2,
     postId: 2,
-  }
+  },
 ];
 
 export default class bookmarkModel {
@@ -18,9 +18,9 @@ export default class bookmarkModel {
     this.userid = userid;
   }
 
-  static get(userId) {
+  static async get(userId) {
     if (!AllBookMarks || AllBookMarks.length === 0) {
-      throw new ApplicationError("there is no bookmarked posts", 404);
+      throw new ApplicationError("No bookmarks found", 404);
     }
     // Get only bookmarks for this user
     const userBookmarkedPosts = AllBookMarks.filter((p) => p.userId === userId);
@@ -31,15 +31,19 @@ export default class bookmarkModel {
 
     const allPosts = PostModel.findAll();
 
+    if (!allPosts || allPosts.length === 0) {
+      throw new ApplicationError("No posts available", 404);
+    }
+
     // Filter posts that are bookmarked
-    const bookmarkedPosts = allPosts.filter((post) =>
-      userBookmarkedPosts.some(
-        (bookmark) => bookmark.postId === post.id && post.status != "draft"
-      )
+    const bookmarkedPosts = allPosts.filter(
+      (post) =>
+        post.status !== "draft" &&
+        userBookmarkedPosts.some((b) => b.postId === post.id)
     );
 
     if (bookmarkedPosts.length === 0) {
-      throw new ApplicationError("No bookmarks found for this user", 404);
+      throw new ApplicationError("No valid bookmarked posts found", 404);
     }
     return bookmarkedPosts;
   }
@@ -52,11 +56,11 @@ export default class bookmarkModel {
     if (alreadyBookmarked) {
       throw new ApplicationError("already bookmarked", 400);
     }
-    
+
     const post = PostModel.findById(postId);
-    if(post.status == "draft"){
+    if (post.status == "draft") {
       throw new ApplicationError("Post is in draft", 400);
-    };
+    }
 
     const newBookMark = new bookmarkModel(
       AllBookMarks.length + 1,
@@ -69,21 +73,20 @@ export default class bookmarkModel {
         "something went wrong while adding to bookmark",
         400
       );
-    };
+    }
     AllBookMarks.push(newBookMark);
     return newBookMark;
   }
 
   static delete(userId, postId) {
-    const Index = AllBookMarks.findIndex(b => b.userId === userId && b.postId === postId);
-    if(Index === -1){
-      throw new ApplicationError(
-        "not found in bookmark list",
-        404
-      );
+    const Index = AllBookMarks.findIndex(
+      (b) => b.userId === userId && b.postId === postId
+    );
+    if (Index === -1) {
+      throw new ApplicationError("not found in bookmark list", 404);
     }
-    const removedPost = AllBookMarks[Index]
-    AllBookMarks.splice(Index,1);
+    const removedPost = AllBookMarks[Index];
+    AllBookMarks.splice(Index, 1);
     return removedPost;
   }
 }
