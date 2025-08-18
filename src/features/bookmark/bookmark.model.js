@@ -78,15 +78,24 @@ export default class bookmarkModel {
     return newBookmark;
   }
 
-  static delete(userId, postId) {
-    const Index = AllBookMarks.findIndex(
+  static async delete(userId, postId) {
+    const bookmarkIndex = AllBookMarks.findIndex(
       (b) => b.userId === userId && b.postId === postId
     );
-    if (Index === -1) {
-      throw new ApplicationError("not found in bookmark list", 404);
+
+    if (bookmarkIndex === -1) {
+      throw new ApplicationError("Bookmark not found", 404);
     }
-    const removedPost = AllBookMarks[Index];
-    AllBookMarks.splice(Index, 1);
-    return removedPost;
+
+    const [removedBookmark] = AllBookMarks.splice(bookmarkIndex, 1);
+
+    if (!removedBookmark) {
+      throw new ApplicationError(
+        "Something went wrong while removing bookmark",
+        500
+      );
+    }
+
+    return removedBookmark;
   }
 }
