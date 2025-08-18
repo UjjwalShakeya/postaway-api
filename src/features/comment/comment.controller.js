@@ -1,5 +1,6 @@
 // importing required modules
 import CommentModel from "../comment/comment.model.js";
+import PostModel from "../post/post.model.js";
 
 export default class CommentController {
   async getAll(req, res, next) {
@@ -13,7 +14,7 @@ export default class CommentController {
     }
 
       const result = await CommentModel.findCommentByPost(postId, page, limit);
-      
+
       res.status(200).json({
         success: true,
         message: `comments for Post ${postId}`,
@@ -34,11 +35,15 @@ export default class CommentController {
       const postId = parseInt(req.params.id);
       const userId = req.userID;
       const { content } = req.body;
-      if (!postId) throw new ApplicationError("Missing post ID ", 400);
+
+      if (isNaN(postId)) {
+      throw new ApplicationError("Invalid post ID", 400);
+    }
 
       if (!content || content.trim() === "") {
         throw new ApplicationError("Comment content cannot be empty", 400);
       }
+
       // Check if post exists
       const postExists = await PostModel.findById(postId);
       if (!postExists) {
@@ -48,7 +53,7 @@ export default class CommentController {
       res.status(201).json({
         success: true,
         message: "New Comment has been added for Post",
-        Comment: newComment,
+        data: newComment,
       });
     } catch (err) {
       next(err); // calling next with error, error will be caught by errorhandler Middleware

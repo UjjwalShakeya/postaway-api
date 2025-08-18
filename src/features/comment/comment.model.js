@@ -63,12 +63,8 @@ export default class CommentModel {
       postId,
       content
     );
-    const isCommentAdded = comments.push(newComment);
-    if (isCommentAdded > 0) {
-      return newComment;
-    } else {
-      throw new ApplicationError("something went wrong adding comment", 400);
-    }
+    comments.push(newComment);
+    return newComment;
   }
   static async remove(id, userId) {
     const commentIndex = comments.findIndex(
