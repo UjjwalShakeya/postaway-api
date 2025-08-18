@@ -45,10 +45,16 @@ export default class LikeController {
     try {
       const userId = req.userID;
       const postId = parseInt(req.params.postId);
-      await LikeModel.delete(userId, postId);
+
+      if (isNaN(postId)) {
+  throw new ApplicationError("Invalid post ID", 400);
+}
+
+      const deletedLike = await LikeModel.delete(userId, postId);
       res.status(200).json({
         success: true,
         message: `like of user ${userId} is removed `,
+        data: deletedLike,
       });
     } catch (err) {
       next(err);// calling next with error, error will be caught by errorhandler Middleware

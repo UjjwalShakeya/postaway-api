@@ -44,13 +44,14 @@ export default class LikeModel {
     const likeIndex = likes.findIndex(
       (l) => l.userId === userId && l.postId === postId
     );
-    if (likeIndex == -1) {
+    if (likeIndex === -1) {
       throw new ApplicationError("Like not found", 404);
     }
-    const [deletedLike] = likes.splice(likeIndex, 1);
+    const deletedLike = likes.splice(likeIndex, 1)[0];
     return deletedLike;
   }
 
+  // to calculate engagement for posts
   static async countByPostId(postId) {
     return likes.filter((like) => like.postId === postId).length;
   }
