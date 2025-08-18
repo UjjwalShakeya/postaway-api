@@ -8,9 +8,12 @@ export default class CommentController {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 5;
 
-      if (!postId) throw new ApplicationError("Missing post ID ", 400);
+      if (isNaN(postId)) {
+      throw new ApplicationError("Invalid post ID", 400);
+    }
 
       const result = await CommentModel.findCommentByPost(postId, page, limit);
+      
       res.status(200).json({
         success: true,
         message: `comments for Post ${postId}`,

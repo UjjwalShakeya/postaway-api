@@ -31,28 +31,29 @@ export default class CommentModel {
     this.postId = postId;
     this.content = content;
   }
-  static async findCommentByPost(id,page,limit) {
-    const isPostFoud = PostModel.findById(id);
+  static async findCommentByPost(postId, page, limit) {
+    const isPostFoud = PostModel.findById(postId);
 
-    if (isPostFoud) {
-      const allCommentsByPost = comments.filter((c) => c.postId == id);
-      if (!allCommentsByPost || allCommentsByPost.length === 0) {
-        throw new ApplicationError("could not get this post's comments", 404);
-      };
-      
-      const startIndex = (page - 1) * limit;
-      const endIndex = page * limit;
-      const paginatedComments = allCommentsByPost.slice(startIndex,endIndex);
+    if (!isPostFoud) {
+      throw new ApplicationError("Post not found", 404);
+    }
 
-      return {
+    const allCommentsByPost = comments.filter((c) => c.postId === postId);
+
+    if (allCommentsByPost.length === 0) {
+      throw new ApplicationError("No comments found for this post", 404);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const paginatedComments = allCommentsByPost.slice(startIndex, endIndex);
+
+    return {
       comments: paginatedComments,
       totalComments: allCommentsByPost.length,
       totalPages: Math.ceil(allCommentsByPost.length / limit),
       currentPage: page,
     };
-    } else {
-      throw new Error("comments dont not exist");
-    }
   }
 
   static async add(userId, postId, content) {
