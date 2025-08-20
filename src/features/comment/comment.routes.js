@@ -28,4 +28,5 @@ commentRouter.put("/:id", jwtAuth, (req, res, next) =>
   CommentControllerInc.updateComment(req, res, next)
 );
 
+
 export default commentRouter;

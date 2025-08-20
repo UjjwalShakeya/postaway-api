@@ -175,3 +175,30 @@
 [2025-08-20T19:09:14.498Z] info: POST /api/comments/1 {"comment":""}
 [2025-08-20T19:10:03.352Z] info: POST /api/comments/115 {"comment":"new comment"}
 [2025-08-20T19:10:16.399Z] info: POST /api/comments/12 {"comment":"new comment"}
+[2025-08-20T19:29:18.972Z] info: DELETE /api/comments/1 Request Body Is Empty
+[2025-08-20T19:29:36.714Z] info: DELETE /api/comments/1 Request Body Is Empty
+[2025-08-20T19:31:34.969Z] info: DELETE /api/comments/20 Request Body Is Empty
+[2025-08-20T19:32:25.426Z] info: DELETE /api/comments/220 Request Body Is Empty
+[2025-08-20T19:32:57.815Z] info: DELETE /api/comments/0 Request Body Is Empty
+[2025-08-20T19:33:00.420Z] info: DELETE /api/comments/0 Request Body Is Empty
+[2025-08-20T19:33:13.001Z] info: DELETE /api/comments/ada Request Body Is Empty
+[2025-08-20T19:33:19.053Z] info: DELETE /api/comments/12 Request Body Is Empty
+[2025-08-20T19:37:38.988Z] info: PUT /api/comments/2 {"comment":"new comment added"}
+[2025-08-20T19:37:51.111Z] info: PUT /api/comments/2 {"comment":"new comment added"}
+[2025-08-20T19:38:30.696Z] info: PUT /api/comments/2 {"comment":"new comment added again"}
+[2025-08-20T19:48:49.944Z] info: GET /api/likes/2 Request Body Is Empty
+[2025-08-20T19:49:15.048Z] info: GET /api/likes/2 Request Body Is Empty
+[2025-08-20T19:49:48.197Z] info: GET /api/likes/2 Request Body Is Empty
+[2025-08-20T19:50:02.681Z] info: GET /api/likes/3 Request Body Is Empty
+[2025-08-20T19:50:32.050Z] info: GET /api/likes/2 Request Body Is Empty
+[2025-08-20T19:50:42.852Z] info: GET /api/likes/1 Request Body Is Empty
+[2025-08-20T19:50:49.076Z] info: GET /api/likes/2 Request Body Is Empty
+[2025-08-20T19:50:52.143Z] info: GET /api/likes/1 Request Body Is Empty
+[2025-08-20T19:53:04.435Z] info: GET /api/likes/0 Request Body Is Empty
+[2025-08-20T19:54:00.474Z] info: POST /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:54:18.133Z] info: POST /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:57:07.939Z] info: GET /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:57:48.835Z] info: GET /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:58:09.716Z] info: GET /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:58:21.314Z] info: DELETE /api/likes/toggle/1 Request Body Is Empty
+[2025-08-20T19:58:52.382Z] info: DELETE /api/likes/toggle/1 Request Body Is Empty
