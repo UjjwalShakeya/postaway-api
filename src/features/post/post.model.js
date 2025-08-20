@@ -272,8 +272,8 @@ export default class PostModel {
 
   // delete specific post
   static async delete(postId) {
-    const ispostFound = posts.findIndex((p) => p.id === postId);
-    if (ispostFound === -1) {
+    const postIndex = posts.findIndex((p) => p.id === postId);
+    if (postIndex === -1) {
       throw new ApplicationError("Post not found", 404);
     }
     const [deletedPost] = posts.splice(postIndex, 1);

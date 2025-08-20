@@ -102,3 +102,16 @@
 [2025-08-20T17:47:10.576Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
 [2025-08-20T17:50:23.680Z] info: GET /api/posts/sorted?sortBy=engagement Request Body Is Empty
 [2025-08-20T17:50:50.851Z] info: GET /api/posts/sorted?sortBy=date Request Body Is Empty
+[2025-08-20T17:56:52.716Z] info: POST /api/posts/ Request Body Is Empty
+[2025-08-20T18:10:35.339Z] info: GET /api/posts/9 Request Body Is Empty
+[2025-08-20T18:11:26.224Z] info: GET /api/posts/2 Request Body Is Empty
+[2025-08-20T18:11:39.357Z] info: GET /api/posts/4 Request Body Is Empty
+[2025-08-20T18:12:09.137Z] info: GET /api/posts/2 Request Body Is Empty
+[2025-08-20T18:12:14.987Z] info: GET /api/posts/9 Request Body Is Empty
+[2025-08-20T18:12:49.794Z] info: GET /api/posts/10 Request Body Is Empty
+[2025-08-20T18:13:02.418Z] info: GET /api/posts/ Request Body Is Empty
+[2025-08-20T18:13:14.333Z] info: GET /api/posts/ Request Body Is Empty
+[2025-08-20T18:13:18.215Z] info: GET /api/posts/0 Request Body Is Empty
+[2025-08-20T18:14:11.817Z] info: DELETE /api/posts/2 Request Body Is Empty
+[2025-08-20T18:14:48.312Z] info: DELETE /api/posts/2 Request Body Is Empty
+[2025-08-20T18:15:30.367Z] info: DELETE /api/posts/2 Request Body Is Empty
