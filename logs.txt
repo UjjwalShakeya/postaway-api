@@ -115,3 +115,26 @@
 [2025-08-20T18:14:11.817Z] info: DELETE /api/posts/2 Request Body Is Empty
 [2025-08-20T18:14:48.312Z] info: DELETE /api/posts/2 Request Body Is Empty
 [2025-08-20T18:15:30.367Z] info: DELETE /api/posts/2 Request Body Is Empty
+[2025-08-20T18:27:07.288Z] info: PUT /api/posts/2 {"imageUrl":"code.jpeg"}
+[2025-08-20T18:27:36.654Z] info: PUT /api/posts/2 {"status":"code.jpeg"}
+[2025-08-20T18:27:51.115Z] info: PUT /api/posts/2 {"imageUrl":"code.jpeg"}
+[2025-08-20T18:29:12.179Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:29:19.604Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:29:55.396Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:30:28.269Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:30:39.215Z] info: PUT /api/posts/-1 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:30:45.393Z] info: PUT /api/posts/0 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:30:54.170Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg"}
+[2025-08-20T18:31:26.054Z] info: PUT /api/posts/2 {"imageUrl":"abc.jpeg","caption":"abcd"}
+[2025-08-20T18:35:06.791Z] info: PUT /api/posts/3 {"caption":"abcd"}
+[2025-08-20T18:35:14.207Z] info: PUT /api/posts/2 {"caption":"abcd"}
+[2025-08-20T18:35:27.810Z] info: PUT /api/posts/6 {"caption":"abcd"}
+[2025-08-20T18:36:01.668Z] info: PUT /api/posts/2 {"caption":"abcd"}
+[2025-08-20T18:36:12.449Z] info: PUT /api/posts/2 {"caption":"abcd"}
+[2025-08-20T18:36:22.000Z] info: PUT /api/posts/1 {"caption":"abcd"}
+[2025-08-20T18:36:41.928Z] info: PUT /api/posts/1 {"caption":"abcd"}
+[2025-08-20T18:37:40.486Z] info: PUT /api/posts/1 {"caption":"abcd"}
+[2025-08-20T18:38:16.985Z] info: PUT /api/posts/1 {"caption":"new caption"}
+[2025-08-20T18:39:15.082Z] info: PUT /api/posts/1 {"caption":"new caption"}
+[2025-08-20T18:39:54.200Z] info: PUT /api/posts/1 {"caption":"new caption"}
+[2025-08-20T18:39:59.409Z] info: PUT /api/posts/1 {"caption":"new caption2"}

@@ -1,4 +1,5 @@
 // importing required modules
+import ApplicationError from "../../../utils/ApplicationError.js";
 import PostModel from "./post.model.js";
 
 export default class PostController {

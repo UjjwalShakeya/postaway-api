@@ -6,7 +6,7 @@ import CommentModel from "../comment/comment.model.js";
 export let posts = [
   {
     id: 1,
-    userId: 1,
+    userId: 2,
     caption: "First post",
     imageUrl: "https://example.com/image1.jpg",
     status: "published",
