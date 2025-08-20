@@ -175,7 +175,7 @@ export default class PostController {
       const userID = req.userID;
       const { status } = req.body;
 
-      if (!postID || !userID) {
+      if (!postID || postID <= 0 ||!userID) {
         throw new ApplicationError("Missing post ID or user ID", 400);
       }
 

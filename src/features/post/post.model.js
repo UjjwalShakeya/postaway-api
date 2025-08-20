@@ -22,7 +22,7 @@ export let posts = [
   },
   {
     id: 3,
-    userId: 3,
+    userId: 2,
     caption: "Third post",
     imageUrl: "https://example.com/image3.jpg",
     status: "published",

@@ -138,3 +138,40 @@
 [2025-08-20T18:39:15.082Z] info: PUT /api/posts/1 {"caption":"new caption"}
 [2025-08-20T18:39:54.200Z] info: PUT /api/posts/1 {"caption":"new caption"}
 [2025-08-20T18:39:59.409Z] info: PUT /api/posts/1 {"caption":"new caption2"}
+[2025-08-20T18:45:33.428Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-20T18:45:46.767Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-20T18:46:03.440Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-20T18:46:11.473Z] info: PATCH /api/posts/2/status {"status":"draft"}
+[2025-08-20T18:46:23.883Z] info: PATCH /api/posts/2/status {"status":"abc"}
+[2025-08-20T18:46:29.583Z] info: PATCH /api/posts/2/status {"status":"draft"}
+[2025-08-20T18:46:33.771Z] info: PATCH /api/posts/2/status {"status":"published"}
+[2025-08-20T18:46:46.525Z] info: PATCH /api/posts/2/status {"status":"archived"}
+[2025-08-20T18:46:57.560Z] info: PATCH /api/posts/0/status {"status":"archived"}
+[2025-08-20T18:47:03.400Z] info: PATCH /api/posts/-1/status {"status":"archived"}
+[2025-08-20T18:47:34.956Z] info: PATCH /api/posts/ab/status {"status":"archived"}
+[2025-08-20T18:48:06.537Z] info: PATCH /api/posts/0/status {"status":"archived"}
+[2025-08-20T18:48:11.652Z] info: PATCH /api/posts/-1/status {"status":"archived"}
+[2025-08-20T18:54:43.280Z] info: GET /api/comments/2?page=1&limit=15 Request Body Is Empty
+[2025-08-20T18:55:24.913Z] info: GET /api/comments/2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:55:39.093Z] info: GET /api/comments/1?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:55:47.683Z] info: GET /api/comments/1?page=&limit=5 Request Body Is Empty
+[2025-08-20T18:55:52.731Z] info: GET /api/comments/1?page=&limit= Request Body Is Empty
+[2025-08-20T18:56:06.477Z] info: GET /api/comments/?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:56:11.410Z] info: GET /api/comments/0?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:56:44.168Z] info: GET /api/comments/2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:57:01.995Z] info: GET /api/comments/2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:57:25.021Z] info: GET /api/comments/2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:58:44.214Z] info: GET /api/comments/-2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T18:59:12.761Z] info: GET /api/comments/2?page=1&limit=5 Request Body Is Empty
+[2025-08-20T19:00:40.942Z] info: POST /api/comments/1 {"content":"a new comment for greenophia House"}
+[2025-08-20T19:02:07.303Z] info: POST /api/comments/1 {"content":"a new comment for greenophia"}
+[2025-08-20T19:03:09.440Z] info: POST /api/comments/1 {"comment":"a new comment for greenophia"}
+[2025-08-20T19:03:16.807Z] info: POST /api/comments/1 {"comment":"a new comment for"}
+[2025-08-20T19:04:18.801Z] info: POST /api/comments/1 {"comment":"a new comment for"}
+[2025-08-20T19:05:39.378Z] info: POST /api/comments/1 {"comment":"a new comment for"}
+[2025-08-20T19:08:10.617Z] info: POST /api/comments/1 {"comment":"your bike is fired"}
+[2025-08-20T19:08:18.858Z] info: POST /api/comments/1 {"comment":"your bike is fired"}
+[2025-08-20T19:09:01.336Z] info: POST /api/comments/1 {"comment":""}
+[2025-08-20T19:09:14.498Z] info: POST /api/comments/1 {"comment":""}
+[2025-08-20T19:10:03.352Z] info: POST /api/comments/115 {"comment":"new comment"}
+[2025-08-20T19:10:16.399Z] info: POST /api/comments/12 {"comment":"new comment"}
