@@ -86,7 +86,7 @@ export default class PostController {
   }
 
   // created new post
-  async createPost(req, res, next) {
+  async createPost(req, res, next) {  
     try {
       const userID = req.userID;
       const { caption, status } = req.body;

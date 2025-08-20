@@ -264,7 +264,7 @@ export default class PostModel {
         p.userId === userId && p.status !== "draft" && p.status !== "archived"
     );
 
-    if (userPosts.length === 0) {
+    if (postsFound.length === 0) {
       throw new ApplicationError("No posts found for this user", 404);
     }
     return postsFound;
