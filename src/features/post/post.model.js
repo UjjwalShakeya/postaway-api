@@ -330,17 +330,19 @@ export default class PostModel {
     }
 
     // Compute engagement for each post
-    const postsWithEngagement = posts.map((post) => {
-      const likes = LikeModel.countByPostId(post.id);
-      const comments = CommentModel.countByPostId(post.id);
-      const engagement = likes + comments; // calculating engangement
+    const postsWithEngagement = await Promise.all(
+    posts.map(async (post) => {
+      const likes = await LikeModel.countByPostId(post.id);
+      const comments = await CommentModel.countByPostId(post.id);
+      const engagement = likes + comments;
 
       return {
         ...post,
         engagement,
       };
-    });
-
+    })
+  );
+    
     if (by === "date") {
       return postsWithEngagement.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt) // when two date objects are subtracted they are automatically converted to a number

@@ -201,8 +201,10 @@ export default class PostController {
       const sortBy = allowedSorts.includes(req.query.sortBy)
         ? req.query.sortBy
         : "engagement";
+        console.log(sortBy);
 
       const sortedPosts = await PostModel.getPostsSorted(sortBy);
+
       res.status(200).json({
         success: true,
         message: `Sorted posts by ${sortBy}`,
