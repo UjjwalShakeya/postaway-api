@@ -1,4 +1,5 @@
 // importin important required modules right here
+import ApplicationError from "../../../utils/ApplicationError.js";
 import bookmarkModel from "./bookmark.model.js";
 
 export default class bookmarkController {
@@ -14,7 +15,7 @@ export default class bookmarkController {
       res.status(200).json({
         success: true,
         message: `Bookmarked posts retrieved successfully`,
-        count: bookmarkedPosts.length, // Helpful for clients
+        count: getAllBookmarkedPosts.length, // Helpful for clients
         data: getAllBookmarkedPosts,
       });
     } catch (err) {
@@ -28,7 +29,7 @@ export default class bookmarkController {
       const postId = parseInt(req.params.postid);
 
       if (isNaN(userId) || isNaN(postId)) {
-        throw new ApplicationError("Invalid user ID Or user Post", 400);
+        throw new ApplicationError("Invalid user ID Or user Post ID", 400);
       }
       const newBookmark = await bookmarkModel.add(userId, postId);
 

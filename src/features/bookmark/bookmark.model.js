@@ -1,6 +1,7 @@
 // importing important require modules
 
 import ApplicationError from "../../../utils/ApplicationError.js";
+import { posts } from "../post/post.model.js";
 import PostModel from "../post/post.model.js";
 
 let AllBookMarks = [
@@ -9,13 +10,18 @@ let AllBookMarks = [
     userId: 2,
     postId: 2,
   },
+  {
+    id: 2,
+    userId: 2,
+    postId: 3,
+  },
 ];
 
 export default class bookmarkModel {
-  constructor(id, postid, userid) {
+  constructor(id, postId, userId) {
     this.id = id;
-    this.postid = postid;
-    this.userid = userid;
+    this.postId = postId;
+    this.userId = userId;
   }
 
   static async get(userId) {
@@ -29,7 +35,7 @@ export default class bookmarkModel {
       throw new ApplicationError("No bookmarks found for this user", 404);
     }
 
-    const allPosts = PostModel.findAll();
+    const allPosts = posts;
 
     if (!allPosts || allPosts.length === 0) {
       throw new ApplicationError("No posts available", 404);
@@ -51,6 +57,7 @@ export default class bookmarkModel {
   static async add(userId, postId) {
     // Check if post exists
     const post = await PostModel.findById(postId);
+
     if (!post) {
       throw new ApplicationError("Post not found", 404);
     }
@@ -60,9 +67,10 @@ export default class bookmarkModel {
     }
 
     // Prevent duplicate bookmarks
-    const alreadyBookmarked = AllBookMarks.some(
-      (bookmark) => bookmark.userId === userId && bookmark.postId === postId
+    const alreadyBookmarked = AllBookMarks.find(
+      (b) => b.postId === postId && b.userId === userId
     );
+
     if (alreadyBookmarked) {
       throw new ApplicationError("Post already bookmarked", 400);
     }
@@ -70,9 +78,10 @@ export default class bookmarkModel {
     // Create new bookmark
     const newBookmark = new bookmarkModel(
       AllBookMarks.length + 1,
-      userId,
-      postId
+      postId,
+      userId
     );
+
     AllBookMarks.push(newBookmark);
 
     return newBookmark;
@@ -84,7 +93,7 @@ export default class bookmarkModel {
     );
 
     if (bookmarkIndex === -1) {
-      throw new ApplicationError("Bookmark not found", 404);
+      throw new ApplicationError("post not in Bookmark", 404);
     }
 
     const [removedBookmark] = AllBookMarks.splice(bookmarkIndex, 1);

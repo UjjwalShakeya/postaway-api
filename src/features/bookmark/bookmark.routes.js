@@ -18,5 +18,4 @@ bookmarkRouter.post('/:postid',jwtAuth, bookmarkControllerInc.createBookmark);
 bookmarkRouter.delete('/:postid',jwtAuth, bookmarkControllerInc.removeBookmark);
 
 
-
 export default bookmarkRouter;

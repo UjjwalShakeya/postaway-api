@@ -5,7 +5,7 @@ import ApplicationError from "../../../utils/ApplicationError.js";
 export default class LikeController {
   async getAllLikes(req, res, next) {
     try {
-      const postId = parseInt(req.params.postId);
+      const postId = parseInt(req.params.postid);
 
       if (isNaN(postId)) {
         throw new ApplicationError("Invalid post ID", 400);
@@ -25,7 +25,7 @@ export default class LikeController {
   async addLike(req, res, next) {
     try {
       const userId = req.userID;
-      const postId = parseInt(req.params.postId);
+      const postId = parseInt(req.params.postid);
 
       if (isNaN(postId)) {
         throw new ApplicationError("Invalid post ID", 400);
@@ -45,7 +45,7 @@ export default class LikeController {
   async deleteLike(req, res, next) {
     try {
       const userId = req.userID;
-      const postId = parseInt(req.params.postId);
+      const postId = parseInt(req.params.postid);
 
       if (isNaN(postId)) {
         throw new ApplicationError("Invalid post ID", 400);
